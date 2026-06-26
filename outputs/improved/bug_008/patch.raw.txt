@@ -1,0 +1,15 @@
+{
+  "edits": [
+    {
+      "file": "fs/namespace.c",
+      "original": "\tif (kattr->propagation) {\n\t\tnamespace_unlock();\n\t\tif (err)\n\t\t\tcleanup_group_ids(mnt, NULL);\n\t}",
+      "replaced": "\tif (kattr->propagation) {\n\t\tif (err)\n\t\t\tcleanup_group_ids(mnt, NULL);\n\t\tnamespace_unlock();\n\t}",
+      "reason": "Move cleanup_group_ids before namespace_unlock to prevent use-after-free. The mount (mnt) may be freed by another task once the namespace lock is released, so cleanup must happen while still holding the lock.",
+      "semantic_preservation_reason": "The cleanup operation itself does not depend on the lock being released; it only needs a valid mount reference. By performing cleanup before unlock, we preserve the exact same cleanup logic while ensuring the mount is still alive.",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "Eliminates the use-after-free by ensuring mnt is still valid when cleanup_group_ids accesses mnt->mnt_group_id. The KASAN crash should no longer occur.",
+  "why_not_amputation": "The fix reorders existing operations without removing or bypassing any functionality. The cleanup is still performed, just at a safe point before the lock is released.",
+  "limitations": "This fix assumes that cleanup_group_ids does not require the namespace lock to be released. If there are subtle dependencies on lock ordering, additional analysis may be needed, but the current evidence strongly supports this reordering."
+}

@@ -1,0 +1,19 @@
+{
+  "status": "unavailable",
+  "affected_files": [
+    "hypotheses.raw.txt",
+    "hypotheses.json",
+    "prompt_reflection.txt",
+    "reflection.raw.txt",
+    "reflection.json",
+    "prompt_patch.txt"
+  ],
+  "reason": "These intermediate files were overwritten by an isolated-metadata smoke test and could not be recovered exactly.",
+  "restored_canonical_files": [
+    "patch.raw.txt",
+    "patch.json",
+    "check_result.json"
+  ],
+  "restoration_source": "results/manual_review_pack.md",
+  "evaluation_impact": "None. Manual labels, real-source patch applicability, and extended metrics use the restored canonical patch and existing verification summaries."
+}

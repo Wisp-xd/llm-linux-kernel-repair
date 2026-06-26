@@ -1,0 +1,21 @@
+Trace summary extracted from crash report:
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "88",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "106",
+  "func": "dump_stack_lvl",
+  "offset": "0x1e7/0x2d0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "433",
+  "func": "print_report",
+  "offset": "0xe6/0x540"
+}

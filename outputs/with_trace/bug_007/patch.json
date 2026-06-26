@@ -1,0 +1,5 @@
+{
+  "edits": [],
+  "expected_effect": "",
+  "limitations": "The provided source code excerpt does not contain the relevant functions (__vb2_buf_mem_free, __vb2_free_mem, __vb2_queue_free) where the fix would need to be applied. Without the full source, it is impossible to generate a reliable patch that addresses the use-after-free or double-free in vb2_vmalloc_put."
+}

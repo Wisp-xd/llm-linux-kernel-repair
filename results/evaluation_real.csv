@@ -1,0 +1,25 @@
+bug_id,bug_type,group,root_cause_correct,patch_applicable,semantic_similarity,amputation_risk,final_label,comment
+bug_001,memory leak,baseline,no,no,low,no,incorrect,Developer patch restores hook_list on offload failure; model produced a no-op around unrelated allocation logic.
+bug_001,memory leak,with_trace,no,no,low,no,incorrect,Trace did not redirect model to developer fix; patch remains a no-op in unrelated nft_netdev_hook_alloc context.
+bug_001,memory leak,improved,no,no,low,no,incorrect,Semantic guard avoids amputation but still proposes no-op/unrelated allocation check rather than list_splice_init cleanup.
+bug_002,memory leak,baseline,partial,no,low,no,incorrect,Model declined to generate a patch because source context looked insufficient; no repair comparable to developer release path.
+bug_002,memory leak,with_trace,partial,no,low,no,incorrect,Model again produced no edit; it does not add the developer resource release on ret<0.
+bug_002,memory leak,improved,partial,partial,low,no,incorrect,Model adds NULL check after attach but developer fix releases frontend resource on generic_rw failure; leak path is not repaired.
+bug_003,out_of_bounds,baseline,yes,yes,medium,no,helpful,Model recognizes off-by-one terminator risk and adds len<buf_size check, but developer fix writes to r->text_buf rather than changing condition.
+bug_003,out_of_bounds,with_trace,yes,yes,medium,no,helpful,Trace version gives same useful OOB direction, but patch is not semantically identical to developer fix.
+bug_003,out_of_bounds,improved,yes,yes,medium,no,helpful,Semantic guard patch preserves normal path and prevents overflow, but differs from developer r->text_buf correction.
+bug_004,out_of_bounds,baseline,partial,no,low,no,incorrect,Model correctly notices missing context but generates no patch; developer adds verify_sec_ctx_len in xfrm_add_acquire.
+bug_004,out_of_bounds,with_trace,yes,partial,medium,no,helpful,Model identifies user security-context length validation, but edit targets a different helper and original snippet does not match current excerpt.
+bug_004,out_of_bounds,improved,yes,yes,medium,no,helpful,Model adds a bounds check near developer location, but it invents structure-field logic instead of using verify_sec_ctx_len(attrs).
+bug_005,out_of_bounds,baseline,partial,yes,low,no,incorrect,Changing 1 to 1U does not fix shift counts >=32; developer patch rejects wValue>=32.
+bug_005,out_of_bounds,with_trace,yes,yes,medium,no,helpful,Model adds wValue<32 guard and preserves valid path, but silently skips invalid input instead of goto error.
+bug_005,out_of_bounds,improved,yes,yes,medium,no,helpful,Semantic guard gives a good bounds-check direction, but behavior differs from developer goto error path.
+bug_006,null_pointer,baseline,partial,no,low,no,incorrect,Model declines to patch; developer fix changes folio check from folio to !IS_ERR(folio).
+bug_006,null_pointer,with_trace,partial,no,low,no,incorrect,No edit generated; does not address ERR_PTR folio case.
+bug_006,null_pointer,improved,no,yes,low,no,incorrect,Model nulls folio after folio_put, but developer fix avoids folio_put on ERR_PTR; root cause and semantics differ.
+bug_007,null_pointer,baseline,partial,no,low,no,incorrect,Model declines to patch due to context; developer fix handles memory model mismatch in vb2_core_create_bufs.
+bug_007,null_pointer,with_trace,partial,no,low,no,incorrect,No edit generated and no equivalent memory model check.
+bug_007,null_pointer,improved,no,no,low,no,incorrect,Model edits buffer free path, but developer fix rejects memory model mismatch before buffer creation; not semantically related.
+bug_008,null_pointer,baseline,yes,yes,high,no,plausible,Patch exactly reorders cleanup_group_ids before namespace_unlock, matching developer fix semantics.
+bug_008,null_pointer,with_trace,partial,no,low,no,incorrect,Model declines to patch despite developer fix being present in excerpt.
+bug_008,null_pointer,improved,yes,yes,high,no,plausible,Semantic guard patch matches developer reorder and explains preservation of cleanup semantics.

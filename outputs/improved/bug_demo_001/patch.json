@@ -1,0 +1,15 @@
+{
+  "edits": [
+    {
+      "file": "drivers/demo/demo_driver.c",
+      "original": "static int demo_send_packet(struct demo_ctx *ctx)\n{\n    int q = ctx->dev->queue;",
+      "replaced": "static int demo_send_packet(struct demo_ctx *ctx)\n{\n    if (!ctx || !ctx->dev)\n        return -1;\n\n    int q = ctx->dev->queue;",
+      "reason": "Avoid dereferencing ctx->dev when it is NULL.",
+      "semantic_preservation_reason": "The original path is preserved when ctx and ctx->dev are valid.",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "The NULL dereference is prevented while normal behavior remains unchanged.",
+  "why_not_amputation": "The patch adds a guard instead of removing the packet handling logic.",
+  "limitations": "Mock output for pipeline verification only."
+}

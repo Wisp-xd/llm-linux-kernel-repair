@@ -1,0 +1,49 @@
+You are a Linux kernel patch reviewer.
+
+Several root-cause hypotheses were generated for the same kernel crash. Compare them against the crash report, stack trace, source code, and optional trace summary. Select the most credible hypothesis.
+
+Evaluation criteria:
+1. Is it consistent with the crash type?
+2. Does it explain the crash location in the stack trace?
+3. Does it explain the sanitizer report or warning?
+4. Does it refer to functions, variables, fields, or resources that exist in the code?
+5. Can it lead to a small, functionality-preserving patch?
+6. Does it contain hallucinated or contradictory information?
+
+<bug_id>
+{{bug_id}}
+</bug_id>
+
+<crash_report>
+{{crash_report}}
+</crash_report>
+
+<source_code>
+{{source_code}}
+</source_code>
+
+<trace_summary>
+{{trace_summary}}
+</trace_summary>
+
+<hypotheses>
+{{hypotheses_json}}
+</hypotheses>
+
+Return strict JSON:
+{
+  "analysis": [
+    {
+      "hypothesis_id": "H1",
+      "strengths": ["..."],
+      "weaknesses": ["..."],
+      "evidence_consistency": "high"
+    }
+  ],
+  "selected_hypothesis_id": "...",
+  "selection_reason": "...",
+  "consistent_with_crash_report": true,
+  "consistent_with_stack_trace": true,
+  "consistent_with_source_code": true
+}
+

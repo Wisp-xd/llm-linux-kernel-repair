@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#6B7280"/>
+</marker>
+</defs>
+<rect width="1600" height="900" fill="#FFFFFF"/>
+<text x="70" y="72" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="38" font-weight="700" fill="#14213D">三组实验输入与目标差异</text>
+<text x="70" y="112" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#5B6475">控制模型、样本与根因推理流程，仅改变 trace 输入和 Patch Generation 约束</text>
+<line x1="70" y1="140" x2="1530" y2="140" stroke="#D9DEE7" stroke-width="2"/>
+<text x="165" y="185" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B6475">实验组</text>
+<text x="545" y="185" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B6475">输入证据</text>
+<text x="1055" y="185" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B6475">Patch 阶段</text>
+<text x="1390" y="185" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B6475">比较目的</text>
+<rect x="70" y="220" width="1460" height="155" rx="8" fill="#FFFFFF" stroke="#E5E9EF" stroke-width="2"/>
+<rect x="70" y="220" width="190" height="155" rx="8" fill="#2563A6"/>
+<text x="165" y="308" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">A  Baseline</text>
+<rect x="305" y="277" width="150" height="48" rx="8" fill="#EAF2FA" stroke="#2563A6" stroke-width="2"/>
+<text x="380.0" y="308" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#2563A6">Crash report</text>
+<rect x="473" y="277" width="150" height="48" rx="8" fill="#EAF2FA" stroke="#2563A6" stroke-width="2"/>
+<text x="548.0" y="308" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#2563A6">Source code</text>
+<line x1="865" y1="301" x2="925" y2="301" stroke="#6B7280" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="945" y="262" width="260" height="78" rx="8" fill="#F7F8FA" stroke="#5B6475" stroke-width="2"/>
+<text x="1075" y="308" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B6475">普通 Patch Prompt</text>
+<line x1="1225" y1="301" x2="1270" y2="301" stroke="#6B7280" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="1290" y="262" width="200" height="78" rx="8" fill="#F7F8FA" stroke="#5B6475" stroke-width="2"/>
+<text x="1390" y="308" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B6475">提供基线结果</text>
+<rect x="70" y="430" width="1460" height="155" rx="8" fill="#FFFFFF" stroke="#E5E9EF" stroke-width="2"/>
+<rect x="70" y="430" width="190" height="155" rx="8" fill="#16877A"/>
+<text x="165" y="518" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">B  With Trace</text>
+<rect x="305" y="487" width="150" height="48" rx="8" fill="#EAF2FA" stroke="#2563A6" stroke-width="2"/>
+<text x="380.0" y="518" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#2563A6">Crash report</text>
+<rect x="473" y="487" width="150" height="48" rx="8" fill="#EAF2FA" stroke="#2563A6" stroke-width="2"/>
+<text x="548.0" y="518" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#2563A6">Source code</text>
+<rect x="641" y="487" width="170" height="48" rx="8" fill="#E7F5F2" stroke="#16877A" stroke-width="2"/>
+<text x="726.0" y="518" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#16877A">Trace summary</text>
+<line x1="865" y1="511" x2="925" y2="511" stroke="#6B7280" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="945" y="472" width="260" height="78" rx="8" fill="#F7F8FA" stroke="#5B6475" stroke-width="2"/>
+<text x="1075" y="518" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#5B6475">普通 Patch Prompt</text>
+<line x1="1225" y1="511" x2="1270" y2="511" stroke="#6B7280" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="1290" y="472" width="200" height="78" rx="8" fill="#E7F5F2" stroke="#16877A" stroke-width="2"/>
+<text x="1390" y="518" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#16877A">观察 trace 影响</text>
+<rect x="70" y="640" width="1460" height="155" rx="8" fill="#FFFFFF" stroke="#E5E9EF" stroke-width="2"/>
+<rect x="70" y="640" width="190" height="155" rx="8" fill="#D97706"/>
+<text x="165" y="728" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">C  Improved</text>
+<rect x="305" y="697" width="150" height="48" rx="8" fill="#EAF2FA" stroke="#2563A6" stroke-width="2"/>
+<text x="380.0" y="728" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#2563A6">Crash report</text>
+<rect x="473" y="697" width="150" height="48" rx="8" fill="#EAF2FA" stroke="#2563A6" stroke-width="2"/>
+<text x="548.0" y="728" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#2563A6">Source code</text>
+<rect x="641" y="697" width="170" height="48" rx="8" fill="#E7F5F2" stroke="#16877A" stroke-width="2"/>
+<text x="726.0" y="728" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#16877A">Trace summary</text>
+<line x1="865" y1="721" x2="925" y2="721" stroke="#6B7280" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="945" y="682" width="260" height="78" rx="8" fill="#FFF3DD" stroke="#D97706" stroke-width="2"/>
+<text x="1075" y="728" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#D97706">Semantic Guard Prompt</text>
+<line x1="1225" y1="721" x2="1270" y2="721" stroke="#6B7280" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="1290" y="682" width="200" height="78" rx="8" fill="#FFF3DD" stroke="#D97706" stroke-width="2"/>
+<text x="1390" y="728" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#D97706">减少截肢式修复</text>
+<rect x="70" y="825" width="260" height="32" rx="8" fill="#EAF2FA"/>
+<text x="200.0" y="847" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="700" fill="#2563A6">控制变量：相同 8 个 bug</text>
+<rect x="350" y="825" width="285" height="32" rx="8" fill="#F7F8FA"/>
+<text x="492.5" y="847" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="700" fill="#5B6475">相同模型与 temperature</text>
+<rect x="655" y="825" width="260" height="32" rx="8" fill="#EAF2FA"/>
+<text x="785.0" y="847" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="700" fill="#2563A6">相同 Hypothesis 流程</text>
+<rect x="935" y="825" width="240" height="32" rx="8" fill="#E7F5F2"/>
+<text x="1055.0" y="847" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="700" fill="#16877A">相同 Reflection 流程</text>
+<rect x="1195" y="825" width="335" height="32" rx="8" fill="#FFF3DD"/>
+<text x="1362.5" y="847" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="700" fill="#D97706">差异仅在 trace / Semantic Guard</text>
+</svg>

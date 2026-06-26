@@ -1,0 +1,12 @@
+{
+  "edits": [
+    {
+      "file": "net/netfilter/nf_tables_api.c",
+      "original": "static struct nft_hook *nft_netdev_hook_alloc(struct net *net,\n\t\t\t\t\t\t const struct nlattr *attr)\n{\n\tstruct nft_hook *hook;\n\n\thook = kmalloc(sizeof(*hook), GFP_KERNEL);\n\tif (!hook)\n\t\treturn ERR_PTR(-ENOMEM);",
+      "replaced": "static struct nft_hook *nft_netdev_hook_alloc(struct net *net,\n\t\t\t\t\t\t const struct nlattr *attr)\n{\n\tstruct nft_hook *hook;\n\n\thook = kmalloc(sizeof(*hook), GFP_KERNEL);\n\tif (!hook)\n\t\treturn ERR_PTR(-ENOMEM);",
+      "reason": "The original code already contains a NULL check after kmalloc. The crash may be due to a different allocation or a missing check elsewhere. No change needed here."
+    }
+  ],
+  "expected_effect": "No functional change; the existing code already handles kmalloc failure correctly.",
+  "limitations": "The provided source excerpt shows a NULL check already present. The actual crash may be in a different allocation or a different code path not shown in the excerpt. Further investigation with full source code is needed."
+}

@@ -1,0 +1,18 @@
+{
+  "bug_id": "bug_008",
+  "kbench_bug_id": "e675fbaf856bd1465eed8b8f51ae182b58b8d656",
+  "bug_type": "null_pointer",
+  "title": "KASAN: null-ptr-deref Read in sys_mount_setattr",
+  "display_title": "KASAN: null-ptr-deref Read in ida_free (3)",
+  "status": "fixed",
+  "subsystem": "fs",
+  "localization_file": "fs/namespace.c",
+  "fix_files_count": 1,
+  "patch_added_lines": 1,
+  "patch_removed_lines": 1,
+  "crash_report_path": "crash_report.txt",
+  "source_file_path": "source.c",
+  "developer_patch_path": "developer_patch.diff",
+  "trace_summary_path": "trace_summary.txt",
+  "source_note": "source.c is a patch-context excerpt, not the full Linux source file."
+}

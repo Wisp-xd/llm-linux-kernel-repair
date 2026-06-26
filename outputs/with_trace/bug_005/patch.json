@@ -1,0 +1,12 @@
+{
+  "edits": [
+    {
+      "file": "drivers/usb/usbip/vhci_hcd.c",
+      "original": "\t\t\tvhci_hcd->port_status[rhport] &= ~(1 << wValue);",
+      "replaced": "\t\t\tif (wValue < 32)\n\t\t\t\tvhci_hcd->port_status[rhport] &= ~(1U << wValue);",
+      "reason": "Add bounds check to prevent shift-out-of-bounds when wValue >= 32, and use unsigned 1U to avoid undefined behavior for shifts of 31 bits on signed int."
+    }
+  ],
+  "expected_effect": "Prevents the UBSAN shift-out-of-bounds crash by skipping the bit clear operation for invalid wValue values, and ensures the shift is performed on an unsigned type.",
+  "limitations": "The patch silently ignores invalid wValue values instead of reporting an error; a more complete fix might log a warning or return an error code."
+}

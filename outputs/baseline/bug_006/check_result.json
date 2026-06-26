@@ -1,0 +1,18 @@
+{
+  "patch_json_valid": true,
+  "edit_count": 0,
+  "all_original_matched": true,
+  "modified_only_localization_file": true,
+  "empty_or_too_short_replacement": false,
+  "large_deletion_detected": false,
+  "early_return_detected": false,
+  "comment_out_detected": false,
+  "reason_provided": true,
+  "semantic_reason_provided": true,
+  "amputation_suspected": false,
+  "risk_level": "low",
+  "warnings": [],
+  "bug_id": "bug_006",
+  "bug_type": "null_pointer",
+  "group": "baseline"
+}

@@ -1,0 +1,172 @@
+You are a Linux kernel patch generation assistant.
+
+Generate a candidate patch based on the selected root-cause hypothesis.
+
+Important requirements:
+1. Output replace-based edits only. Do not output a full git diff.
+2. Each edit must contain file, original, replaced, and reason.
+3. original must be a continuous snippet that appears exactly in the source code.
+4. replaced must be the complete replacement snippet.
+5. Keep the modification small and directly related to the selected hypothesis.
+6. Do not invent functions, macros, fields, or files.
+7. If no reliable patch can be generated, return an empty edits list and explain why.
+
+<bug_id>
+bug_008
+</bug_id>
+
+<localization_file>
+fs/namespace.c
+</localization_file>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "88",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "106",
+  "func": "dump_stack_lvl",
+  "offset": "0x1e7/0x2d0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "433",
+  "func": "print_report",
+  "offset": "0xe6/0x540"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "536",
+  "func": "kasan_report",
+  "offset": "0x176/0x1b0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/generic.c",
+  "line": "187",
+  "func": "kasan_check_range",
+  "offset": "0x283/0x290"
+}
+{
+  "inline": true,
+  "file": "include/linux/instrumented.h",
+  "line": "72",
+  "func": "instrument_atomic_read"
+}
+{
+  "inline": true,
+  "file": "include/asm-generic/bitops/instrumented-non-atomic.h",
+  "line": "141",
+  "func": "_test_bit"
+}
+{
+  "inline": false,
+  "file": "lib/idr.c",
+  "line": "511",
+  "func": "ida_free",
+  "offset": "0x1b9/0x400"
+}
+{
+  "inline": true,
+  "file": "fs/namespace.c",
+  "line": "160",
+  "func": "mnt_release_group_id"
+}
+{
+  "inline": true,
+  "file": "fs/namespace.c",
+  "line": "2093",
+  "func": "cleanup_group_ids"
+}
+{
+  "inline": true,
+  "file": "fs/namespace.c",
+  "line": "4188",
+  "func": "do_mount_setattr"
+}
+{
+  "inline": true,
+  "file": "fs/namespace.c",
+  "line": "4375",
+  "func": "__do_sys_mount_setattr"
+}
+{
+  "inline": false,
+  "file": "fs/namespace.c",
+  "line": "4334",
+  "func": "__se_sys_mount_setattr",
+  "offset": "0xc44/0x1b00"
+}
+{
+  "inline": true,
+  "file": "arch/x86/entry/common.c",
+  "line": "50",
+  "func": "do_syscall_x64"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "80",
+  "func": "do_syscall_64",
+  "offset": "0x41/0xc0"
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/fs/namespace.c b/fs/namespace.c */
+
+/* @@ -4183,9 +4183,9 @@ static int do_mount_setattr(struct path *path, struct mount_kattr *kattr) */
+	unlock_mount_hash();
+
+	if (kattr->propagation) {
+		namespace_unlock();
+		if (err)
+			cleanup_group_ids(mnt, NULL);
+	}
+
+	return err;
+
+</source_code>
+
+<selected_hypothesis>
+{
+  "id": "H1",
+  "suspicious_function_or_variable": "cleanup_group_ids",
+  "root_cause_hypothesis": "cleanup_group_ids is called with a stale or already-freed mount structure (mnt), leading to an invalid memory access when ida_free attempts to clear a bit in the IDA bitmap via _test_bit.",
+  "evidence": [
+    "Stack trace shows ida_free -> _test_bit -> kasan_check_range -> kasan_report, indicating a KASAN-detected out-of-bounds access during IDA bitmap manipulation.",
+    "cleanup_group_ids is called from do_mount_setattr when err is non-zero and kattr->propagation is true, but the mount (mnt) may have been partially cleaned up or freed earlier in the error path.",
+    "The source excerpt shows cleanup_group_ids(mnt, NULL) is called after namespace_unlock(), which may have already released resources associated with mnt."
+  ],
+  "repair_idea": "Ensure mnt is still valid before calling cleanup_group_ids, or move the cleanup call before namespace_unlock() to prevent use-after-free.",
+  "uncertainty": "Medium: The exact lifetime of mnt is unclear from the provided snippet, but the KASAN report strongly suggests a use-after-free or out-of-bounds access in the IDA bitmap."
+}
+</selected_hypothesis>
+
+Return strict JSON:
+{
+  "edits": [
+    {
+      "file": "fs/namespace.c",
+      "original": "...",
+      "replaced": "...",
+      "reason": "..."
+    }
+  ],
+  "expected_effect": "...",
+  "limitations": "..."
+}
+

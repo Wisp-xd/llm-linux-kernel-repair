@@ -1,0 +1,18 @@
+{
+  "bug_id": "bug_001",
+  "kbench_bug_id": "6c4345574ac937d9ccc195fdadb44f7cc95a19f9",
+  "bug_type": "memory leak",
+  "title": "memory leak in nft_chain_parse_hook",
+  "display_title": "memory leak in nft_chain_parse_hook",
+  "status": "fixed",
+  "subsystem": "netfilter",
+  "localization_file": "net/netfilter/nf_tables_api.c",
+  "fix_files_count": 1,
+  "patch_added_lines": 3,
+  "patch_removed_lines": 1,
+  "crash_report_path": "crash_report.txt",
+  "source_file_path": "source.c",
+  "developer_patch_path": "developer_patch.diff",
+  "trace_summary_path": "trace_summary.txt",
+  "source_note": "source.c is a patch-context excerpt, not the full Linux source file."
+}

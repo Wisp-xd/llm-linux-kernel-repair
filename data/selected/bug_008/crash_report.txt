@@ -1,0 +1,97 @@
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "88",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "106",
+  "func": "dump_stack_lvl",
+  "offset": "0x1e7/0x2d0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "433",
+  "func": "print_report",
+  "offset": "0xe6/0x540"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "536",
+  "func": "kasan_report",
+  "offset": "0x176/0x1b0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/generic.c",
+  "line": "187",
+  "func": "kasan_check_range",
+  "offset": "0x283/0x290"
+}
+{
+  "inline": true,
+  "file": "include/linux/instrumented.h",
+  "line": "72",
+  "func": "instrument_atomic_read"
+}
+{
+  "inline": true,
+  "file": "include/asm-generic/bitops/instrumented-non-atomic.h",
+  "line": "141",
+  "func": "_test_bit"
+}
+{
+  "inline": false,
+  "file": "lib/idr.c",
+  "line": "511",
+  "func": "ida_free",
+  "offset": "0x1b9/0x400"
+}
+{
+  "inline": true,
+  "file": "fs/namespace.c",
+  "line": "160",
+  "func": "mnt_release_group_id"
+}
+{
+  "inline": true,
+  "file": "fs/namespace.c",
+  "line": "2093",
+  "func": "cleanup_group_ids"
+}
+{
+  "inline": true,
+  "file": "fs/namespace.c",
+  "line": "4188",
+  "func": "do_mount_setattr"
+}
+{
+  "inline": true,
+  "file": "fs/namespace.c",
+  "line": "4375",
+  "func": "__do_sys_mount_setattr"
+}
+{
+  "inline": false,
+  "file": "fs/namespace.c",
+  "line": "4334",
+  "func": "__se_sys_mount_setattr",
+  "offset": "0xc44/0x1b00"
+}
+{
+  "inline": true,
+  "file": "arch/x86/entry/common.c",
+  "line": "50",
+  "func": "do_syscall_x64"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "80",
+  "func": "do_syscall_64",
+  "offset": "0x41/0xc0"
+}

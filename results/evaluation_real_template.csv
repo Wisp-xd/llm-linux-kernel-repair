@@ -1,0 +1,25 @@
+bug_id,bug_type,group,root_cause_correct,patch_applicable,semantic_similarity,amputation_risk,final_label,comment
+bug_001,memory leak,baseline,TBD,TBD,TBD,TBD,TBD,TBD
+bug_001,memory leak,with_trace,TBD,TBD,TBD,TBD,TBD,TBD
+bug_001,memory leak,improved,TBD,TBD,TBD,TBD,TBD,TBD
+bug_002,memory leak,baseline,TBD,TBD,TBD,TBD,TBD,TBD
+bug_002,memory leak,with_trace,TBD,TBD,TBD,TBD,TBD,TBD
+bug_002,memory leak,improved,TBD,TBD,TBD,TBD,TBD,TBD
+bug_003,out_of_bounds,baseline,TBD,TBD,TBD,TBD,TBD,TBD
+bug_003,out_of_bounds,with_trace,TBD,TBD,TBD,TBD,TBD,TBD
+bug_003,out_of_bounds,improved,TBD,TBD,TBD,TBD,TBD,TBD
+bug_004,out_of_bounds,baseline,TBD,TBD,TBD,TBD,TBD,TBD
+bug_004,out_of_bounds,with_trace,TBD,TBD,TBD,TBD,TBD,TBD
+bug_004,out_of_bounds,improved,TBD,TBD,TBD,TBD,TBD,TBD
+bug_005,out_of_bounds,baseline,TBD,TBD,TBD,TBD,TBD,TBD
+bug_005,out_of_bounds,with_trace,TBD,TBD,TBD,TBD,TBD,TBD
+bug_005,out_of_bounds,improved,TBD,TBD,TBD,TBD,TBD,TBD
+bug_006,null_pointer,baseline,TBD,TBD,TBD,TBD,TBD,TBD
+bug_006,null_pointer,with_trace,TBD,TBD,TBD,TBD,TBD,TBD
+bug_006,null_pointer,improved,TBD,TBD,TBD,TBD,TBD,TBD
+bug_007,null_pointer,baseline,TBD,TBD,TBD,TBD,TBD,TBD
+bug_007,null_pointer,with_trace,TBD,TBD,TBD,TBD,TBD,TBD
+bug_007,null_pointer,improved,TBD,TBD,TBD,TBD,TBD,TBD
+bug_008,null_pointer,baseline,TBD,TBD,TBD,TBD,TBD,TBD
+bug_008,null_pointer,with_trace,TBD,TBD,TBD,TBD,TBD,TBD
+bug_008,null_pointer,improved,TBD,TBD,TBD,TBD,TBD,TBD

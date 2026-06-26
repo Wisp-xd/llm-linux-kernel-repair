@@ -1,0 +1,12 @@
+{
+  "edits": [
+    {
+      "file": "fs/namespace.c",
+      "original": "\tif (kattr->propagation) {\n\t\tnamespace_unlock();\n\t\tif (err)\n\t\t\tcleanup_group_ids(mnt, NULL);\n\t}",
+      "replaced": "\tif (kattr->propagation) {\n\t\tif (err)\n\t\t\tcleanup_group_ids(mnt, NULL);\n\t\tnamespace_unlock();\n\t}",
+      "reason": "Move cleanup_group_ids call before namespace_unlock to ensure mnt is still valid and prevent use-after-free, as namespace_unlock may release resources associated with mnt."
+    }
+  ],
+  "expected_effect": "Prevents KASAN-detected out-of-bounds access in ida_free by ensuring mnt is not freed before cleanup_group_ids is called.",
+  "limitations": "The exact lifetime of mnt is not fully verified; if mnt is already invalid before this point, additional checks may be needed."
+}

@@ -1,0 +1,18 @@
+{
+  "bug_id": "bug_002",
+  "kbench_bug_id": "5f4efc25ef5c6175138a39105a204749b5c83b1c",
+  "bug_type": "memory leak",
+  "title": "memory leak in cinergyt2_fe_attach",
+  "display_title": "memory leak in cinergyt2_fe_attach",
+  "status": "fixed",
+  "subsystem": "usb, media",
+  "localization_file": "drivers/media/usb/dvb-usb/cinergyT2-core.c",
+  "fix_files_count": 1,
+  "patch_added_lines": 2,
+  "patch_removed_lines": 0,
+  "crash_report_path": "crash_report.txt",
+  "source_file_path": "source.c",
+  "developer_patch_path": "developer_patch.diff",
+  "trace_summary_path": "trace_summary.txt",
+  "source_note": "source.c is a patch-context excerpt, not the full Linux source file."
+}

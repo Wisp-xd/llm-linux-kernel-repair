@@ -1,0 +1,15 @@
+{
+  "edits": [
+    {
+      "file": "kernel/printk/printk.c",
+      "original": "if (buf_size > 0)\n\t\ttext[len] = 0;",
+      "replaced": "if (len < buf_size)\n\t\ttext[len] = 0;",
+      "reason": "The original condition 'buf_size > 0' does not prevent writing the null terminator at index len when len equals buf_size, causing an off-by-one write past the allocated buffer. Changing to 'len < buf_size' ensures the null terminator is only written when there is space within the buffer, preventing heap corruption.",
+      "semantic_preservation_reason": "When the buffer is not full (len < buf_size), the null terminator is still appended as before, preserving the existing behavior of null-terminating the output string. When the buffer is exactly full, the output remains valid without the null terminator, which is acceptable since the caller is expected to handle the length returned.",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "Prevents the off-by-one write in record_print_text when the output buffer is exactly filled, eliminating the heap corruption detected by KASAN during subsequent allocations.",
+  "why_not_amputation": "The fix preserves the null-termination logic for all cases where space exists, only skipping it when the buffer is exactly full, which is a standard pattern for bounded string operations. No core functionality is removed or bypassed.",
+  "limitations": "This fix addresses the specific off-by-one in record_print_text. If there are other callers or similar patterns elsewhere, they may need separate fixes. The change assumes that callers correctly use the returned length and do not rely on null termination when the buffer is full."
+}

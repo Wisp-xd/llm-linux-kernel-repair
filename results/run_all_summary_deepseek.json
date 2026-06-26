@@ -1,0 +1,133 @@
+{
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "temperature": 0.2,
+  "case_count": 8,
+  "groups": [
+    "baseline",
+    "with_trace",
+    "improved"
+  ],
+  "runs": [
+    {
+      "bug_id": "bug_001",
+      "group": "baseline",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_001"
+    },
+    {
+      "bug_id": "bug_001",
+      "group": "with_trace",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_001"
+    },
+    {
+      "bug_id": "bug_001",
+      "group": "improved",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_001"
+    },
+    {
+      "bug_id": "bug_002",
+      "group": "baseline",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_002"
+    },
+    {
+      "bug_id": "bug_002",
+      "group": "with_trace",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_002"
+    },
+    {
+      "bug_id": "bug_002",
+      "group": "improved",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_002"
+    },
+    {
+      "bug_id": "bug_003",
+      "group": "baseline",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_003"
+    },
+    {
+      "bug_id": "bug_003",
+      "group": "with_trace",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_003"
+    },
+    {
+      "bug_id": "bug_003",
+      "group": "improved",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_003"
+    },
+    {
+      "bug_id": "bug_004",
+      "group": "baseline",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_004"
+    },
+    {
+      "bug_id": "bug_004",
+      "group": "with_trace",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_004"
+    },
+    {
+      "bug_id": "bug_004",
+      "group": "improved",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_004"
+    },
+    {
+      "bug_id": "bug_005",
+      "group": "baseline",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_005"
+    },
+    {
+      "bug_id": "bug_005",
+      "group": "with_trace",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_005"
+    },
+    {
+      "bug_id": "bug_005",
+      "group": "improved",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_005"
+    },
+    {
+      "bug_id": "bug_006",
+      "group": "baseline",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_006"
+    },
+    {
+      "bug_id": "bug_006",
+      "group": "with_trace",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_006"
+    },
+    {
+      "bug_id": "bug_006",
+      "group": "improved",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_006"
+    },
+    {
+      "bug_id": "bug_007",
+      "group": "baseline",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_007"
+    },
+    {
+      "bug_id": "bug_007",
+      "group": "with_trace",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_007"
+    },
+    {
+      "bug_id": "bug_007",
+      "group": "improved",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_007"
+    },
+    {
+      "bug_id": "bug_008",
+      "group": "baseline",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_008"
+    },
+    {
+      "bug_id": "bug_008",
+      "group": "with_trace",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_008"
+    },
+    {
+      "bug_id": "bug_008",
+      "group": "improved",
+      "out_dir": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_008"
+    }
+  ]
+}

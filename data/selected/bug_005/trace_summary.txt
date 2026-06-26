@@ -1,0 +1,21 @@
+Trace summary extracted from crash report:
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "79",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "120",
+  "func": "dump_stack",
+  "offset": "0x107/0x163"
+}
+{
+  "inline": false,
+  "file": "lib/ubsan.c",
+  "line": "148",
+  "func": "ubsan_epilogue",
+  "offset": "0xb/0x5a"
+}

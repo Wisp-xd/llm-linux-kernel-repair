@@ -1,0 +1,7 @@
+BUG: kernel NULL pointer dereference in demo_send_packet
+RIP: demo_send_packet+0x21/0x90 drivers/demo/demo_driver.c:18
+Call Trace:
+ demo_ioctl
+ demo_send_packet
+The crash happens when ctx->dev is NULL and demo_send_packet dereferences ctx->dev->queue.
+

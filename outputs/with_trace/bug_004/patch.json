@@ -1,0 +1,12 @@
+{
+  "edits": [
+    {
+      "file": "net/xfrm/xfrm_user.c",
+      "original": "static int copy_from_user_sec_ctx(struct xfrm_policy *pol, struct nlattr **attrs)\n{\n\tstruct nlattr *rt = attrs[XFRMA_SEC_CTX];\n\tstruct xfrm_user_sec_ctx *uctx;\n\n\tif (!rt)\n\t\treturn 0;\n\n\tuctx = nla_data(rt);\n\treturn security_xfrm_policy_alloc(&pol->security, uctx);\n}",
+      "replaced": "static int copy_from_user_sec_ctx(struct xfrm_policy *pol, struct nlattr **attrs)\n{\n\tstruct nlattr *rt = attrs[XFRMA_SEC_CTX];\n\tstruct xfrm_user_sec_ctx *uctx;\n\n\tif (!rt)\n\t\treturn 0;\n\n\tuctx = nla_data(rt);\n\tif (uctx->ctx_len > nla_len(rt) - sizeof(*uctx))\n\t\treturn -EINVAL;\n\treturn security_xfrm_policy_alloc(&pol->security, uctx);\n}",
+      "reason": "Add a bounds check to ensure the user-supplied security context length (uctx->ctx_len) does not exceed the actual data available in the netlink attribute, preventing a heap buffer overflow in selinux_xfrm_alloc_user when it copies the context."
+    }
+  ],
+  "expected_effect": "The added check will reject malformed netlink messages with an invalid security context length before the memcpy in selinux_xfrm_alloc_user is reached, preventing the KASAN-reported heap buffer overflow.",
+  "limitations": "This fix only addresses the overflow in the netlink path. If the same selinux_xfrm_alloc_user function is called from other contexts with untrusted length values, additional validation may be needed there. The patch assumes that the netlink attribute length is correctly set by the kernel and that the subtraction does not underflow (which is safe because nla_len(rt) >= sizeof(*uctx) is already implied by the attribute's existence)."
+}

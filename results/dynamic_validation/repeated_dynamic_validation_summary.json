@@ -1,0 +1,59 @@
+{
+  "bug": "bug_008",
+  "variant": "llm_improved",
+  "reused_kernel_job": "0000000a",
+  "kernel_commit": "197b6b60ae7bc51dd0814953c562833143b292aa",
+  "target_crash": "KASAN: null-ptr-deref Read in sys_mount_setattr",
+  "configuration": {
+    "runs": 3,
+    "syz_crush_window_per_run": "6m",
+    "minimum_requested_window": "5m",
+    "heartbeat_interval": "10s",
+    "heartbeat_protocol_marker": "executing program",
+    "heartbeat_process": "independent child process with PR_SET_PDEATHSIG",
+    "reproducer_loop_delay_ms": 0,
+    "vm": "qemu:2-2048",
+    "instances": 1,
+    "procs": 2
+  },
+  "runs": [
+    {
+      "run": 1,
+      "job_id": "00000016",
+      "status": "finished",
+      "image_ability": "normal",
+      "target_crash_reproduced": false,
+      "special_crashes": [],
+      "exceptions": [],
+      "clean_pass": true
+    },
+    {
+      "run": 2,
+      "job_id": "00000017",
+      "status": "finished",
+      "image_ability": "normal",
+      "target_crash_reproduced": false,
+      "special_crashes": [],
+      "exceptions": [],
+      "clean_pass": true
+    },
+    {
+      "run": 3,
+      "job_id": "00000018",
+      "status": "finished",
+      "image_ability": "normal",
+      "target_crash_reproduced": false,
+      "special_crashes": [],
+      "exceptions": [],
+      "clean_pass": true
+    }
+  ],
+  "aggregate": {
+    "clean_passes": "3/3",
+    "target_crashes": 0,
+    "special_crashes": 0,
+    "worker_exceptions": 0,
+    "total_configured_validation_time": "18m"
+  },
+  "conclusion": "The patched kernel completed three independent six-minute syz-crush runs without the target crash, special crashes, or worker errors."
+}

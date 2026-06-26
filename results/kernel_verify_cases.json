@@ -1,0 +1,122 @@
+[
+  {
+    "bug_id": "bug_001",
+    "bug_type": "memory leak",
+    "title": "memory leak in nft_chain_parse_hook",
+    "localization_file": "net/netfilter/nf_tables_api.c",
+    "kbench_bug_id": "6c4345574ac937d9ccc195fdadb44f7cc95a19f9",
+    "fix_commit": "77972a36ecc4db7fc7c68f0e80714263c5f03f65",
+    "parent_commit": "d047283a7034140ea5da759a494fd2274affdd46",
+    "developer_patch": "D:\\SQA\\llm-linux-kernel-repair\\data\\selected\\bug_001\\developer_patch.diff",
+    "model_patches": {
+      "baseline": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_001\\patch.json",
+      "with_trace": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_001\\patch.json",
+      "improved": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_001\\patch.json"
+    }
+  },
+  {
+    "bug_id": "bug_002",
+    "bug_type": "memory leak",
+    "title": "memory leak in cinergyt2_fe_attach",
+    "localization_file": "drivers/media/usb/dvb-usb/cinergyT2-core.c",
+    "kbench_bug_id": "5f4efc25ef5c6175138a39105a204749b5c83b1c",
+    "fix_commit": "9ad1efee086e0e913914fa2b2173efb830bad68c",
+    "parent_commit": "321c0d383dc3aa1b00a1a1e0957f1543fc84a028",
+    "developer_patch": "D:\\SQA\\llm-linux-kernel-repair\\data\\selected\\bug_002\\developer_patch.diff",
+    "model_patches": {
+      "baseline": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_002\\patch.json",
+      "with_trace": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_002\\patch.json",
+      "improved": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_002\\patch.json"
+    }
+  },
+  {
+    "bug_id": "bug_003",
+    "bug_type": "out_of_bounds",
+    "title": "KASAN: slab-out-of-bounds Write in record_print_text",
+    "localization_file": "kernel/printk/printk.c",
+    "kbench_bug_id": "7d0e7e183df07b0c306cca5dfd022a64c302dd4f",
+    "fix_commit": "08d60e5999540110576e7c1346d486220751b7f9",
+    "parent_commit": "f0e386ee0c0b71ea6f7238506a4d0965a2dbef11",
+    "developer_patch": "D:\\SQA\\llm-linux-kernel-repair\\data\\selected\\bug_003\\developer_patch.diff",
+    "model_patches": {
+      "baseline": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_003\\patch.json",
+      "with_trace": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_003\\patch.json",
+      "improved": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_003\\patch.json"
+    }
+  },
+  {
+    "bug_id": "bug_004",
+    "bug_type": "out_of_bounds",
+    "title": "KASAN: slab-out-of-bounds Read in selinux_xfrm_alloc_user",
+    "localization_file": "net/xfrm/xfrm_user.c",
+    "kbench_bug_id": "b72d20070b541e44e5b91326de68930e51654c81",
+    "fix_commit": "a1a7e3a36e01ca6e67014f8cf673cb8e47be5550",
+    "parent_commit": "171d449a028573b2f0acdc7f31ecbb045391b320",
+    "developer_patch": "D:\\SQA\\llm-linux-kernel-repair\\data\\selected\\bug_004\\developer_patch.diff",
+    "model_patches": {
+      "baseline": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_004\\patch.json",
+      "with_trace": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_004\\patch.json",
+      "improved": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_004\\patch.json"
+    }
+  },
+  {
+    "bug_id": "bug_005",
+    "bug_type": "out_of_bounds",
+    "title": "UBSAN: shift-out-of-bounds in vhci_hub_control",
+    "localization_file": "drivers/usb/usbip/vhci_hcd.c",
+    "kbench_bug_id": "4ed0d6eea4561854b366170155a78652da4cef29",
+    "fix_commit": "718bf42b119de652ebcc93655a1f33a9c0d04b3c",
+    "parent_commit": "020a1f453449294926ca548d8d5ca970926e8dfd",
+    "developer_patch": "D:\\SQA\\llm-linux-kernel-repair\\data\\selected\\bug_005\\developer_patch.diff",
+    "model_patches": {
+      "baseline": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_005\\patch.json",
+      "with_trace": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_005\\patch.json",
+      "improved": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_005\\patch.json"
+    }
+  },
+  {
+    "bug_id": "bug_006",
+    "bug_type": "null_pointer",
+    "title": "KASAN: null-ptr-deref Read in filemap_fault",
+    "localization_file": "mm/filemap.c",
+    "kbench_bug_id": "d21cb12ee03822236d82ba4e83a1f8968e7832fb",
+    "fix_commit": "38a55db9877cae9aa9cc53bb0464b7434fb03e75",
+    "parent_commit": "dd9e11d6477a52ede9ebe575c83285e79e823889",
+    "developer_patch": "D:\\SQA\\llm-linux-kernel-repair\\data\\selected\\bug_006\\developer_patch.diff",
+    "model_patches": {
+      "baseline": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_006\\patch.json",
+      "with_trace": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_006\\patch.json",
+      "improved": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_006\\patch.json"
+    }
+  },
+  {
+    "bug_id": "bug_007",
+    "bug_type": "null_pointer",
+    "title": "KASAN: null-ptr-deref Read in __vb2_buf_mem_free",
+    "localization_file": "drivers/media/common/videobuf2/videobuf2-core.c",
+    "kbench_bug_id": "17535f4bf5b322437f7c639b59161ce343fc55a9",
+    "fix_commit": "62dcb4f41836bd3c44b5b651bb6df07ea4cb1551",
+    "parent_commit": "2912289a518077ddb8214e05336700148e97e235",
+    "developer_patch": "D:\\SQA\\llm-linux-kernel-repair\\data\\selected\\bug_007\\developer_patch.diff",
+    "model_patches": {
+      "baseline": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_007\\patch.json",
+      "with_trace": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_007\\patch.json",
+      "improved": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_007\\patch.json"
+    }
+  },
+  {
+    "bug_id": "bug_008",
+    "bug_type": "null_pointer",
+    "title": "KASAN: null-ptr-deref Read in sys_mount_setattr",
+    "localization_file": "fs/namespace.c",
+    "kbench_bug_id": "e675fbaf856bd1465eed8b8f51ae182b58b8d656",
+    "fix_commit": "cb2239c198ad9fbd5aced22cf93e45562da781eb",
+    "parent_commit": "197b6b60ae7bc51dd0814953c562833143b292aa",
+    "developer_patch": "D:\\SQA\\llm-linux-kernel-repair\\data\\selected\\bug_008\\developer_patch.diff",
+    "model_patches": {
+      "baseline": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\baseline\\bug_008\\patch.json",
+      "with_trace": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\with_trace\\bug_008\\patch.json",
+      "improved": "D:\\SQA\\llm-linux-kernel-repair\\outputs\\improved\\bug_008\\patch.json"
+    }
+  }
+]

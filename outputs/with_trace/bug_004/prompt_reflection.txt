@@ -1,0 +1,540 @@
+You are a Linux kernel patch reviewer.
+
+Several root-cause hypotheses were generated for the same kernel crash. Compare them against the crash report, stack trace, source code, and optional trace summary. Select the most credible hypothesis.
+
+Evaluation criteria:
+1. Is it consistent with the crash type?
+2. Does it explain the crash location in the stack trace?
+3. Does it explain the sanitizer report or warning?
+4. Does it refer to functions, variables, fields, or resources that exist in the code?
+5. Can it lead to a small, functionality-preserving patch?
+6. Does it contain hallucinated or contradictory information?
+
+<bug_id>
+bug_004
+</bug_id>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "77",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "118",
+  "func": "dump_stack",
+  "offset": "0x188/0x20d"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "374",
+  "func": "print_address_description.constprop.0.cold",
+  "offset": "0xd3/0x315"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "506",
+  "func": "__kasan_report.cold",
+  "offset": "0x1a/0x32"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "641",
+  "func": "kasan_report",
+  "offset": "0xe/0x20"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/generic.c",
+  "line": "185",
+  "func": "check_memory_region_inline"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/generic.c",
+  "line": "192",
+  "func": "check_memory_region",
+  "offset": "0x128/0x190"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "127",
+  "func": "memcpy",
+  "offset": "0x20/0x50"
+}
+{
+  "inline": true,
+  "file": "include/linux/string.h",
+  "line": "381",
+  "func": "memcpy"
+}
+{
+  "inline": false,
+  "file": "security/selinux/xfrm.c",
+  "line": "99",
+  "func": "selinux_xfrm_alloc_user",
+  "offset": "0x23e/0x450"
+}
+{
+  "inline": false,
+  "file": "security/security.c",
+  "line": "2263",
+  "func": "security_xfrm_policy_alloc",
+  "offset": "0x6c/0xb0"
+}
+{
+  "inline": true,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "1462",
+  "func": "copy_from_user_sec_ctx"
+}
+{
+  "inline": false,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "1627",
+  "func": "xfrm_policy_construct",
+  "offset": "0x2a8/0x660"
+}
+{
+  "inline": false,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "2280",
+  "func": "xfrm_add_acquire",
+  "offset": "0x215/0x9f0"
+}
+{
+  "inline": false,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "2676",
+  "func": "xfrm_user_rcv_msg",
+  "offset": "0x414/0x700"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "2469",
+  "func": "netlink_rcv_skb",
+  "offset": "0x15a/0x410"
+}
+{
+  "inline": false,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "2684",
+  "func": "xfrm_netlink_rcv",
+  "offset": "0x6b/0x90"
+}
+{
+  "inline": true,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1303",
+  "func": "netlink_unicast_kernel"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1329",
+  "func": "netlink_unicast",
+  "offset": "0x537/0x740"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1918",
+  "func": "netlink_sendmsg",
+  "offset": "0x882/0xe10"
+}
+{
+  "inline": true,
+  "file": "net/socket.c",
+  "line": "652",
+  "func": "sock_sendmsg_nosec"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "672",
+  "func": "sock_sendmsg",
+  "offset": "0xcf/0x120"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2345",
+  "func": "____sys_sendmsg",
+  "offset": "0x6b9/0x7d0"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2399",
+  "func": "___sys_sendmsg",
+  "offset": "0x100/0x170"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2432",
+  "func": "__sys_sendmsg",
+  "offset": "0xec/0x1b0"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "294",
+  "func": "do_syscall_64",
+  "offset": "0xf6/0x7d0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "72",
+  "func": "save_stack",
+  "offset": "0x1b/0x80"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "80",
+  "func": "set_track"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "515",
+  "func": "__kasan_kmalloc"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "488",
+  "func": "__kasan_kmalloc.constprop.0",
+  "offset": "0xbf/0xd0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "142",
+  "func": "__kmalloc_reserve.isra.0",
+  "offset": "0x39/0xe0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "210",
+  "func": "__alloc_skb",
+  "offset": "0xef/0x5a0"
+}
+{
+  "inline": true,
+  "file": "include/linux/skbuff.h",
+  "line": "1083",
+  "func": "alloc_skb"
+}
+{
+  "inline": true,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1175",
+  "func": "netlink_alloc_large_skb"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1893",
+  "func": "netlink_sendmsg",
+  "offset": "0x97b/0xe10"
+}
+{
+  "inline": true,
+  "file": "net/socket.c",
+  "line": "652",
+  "func": "sock_sendmsg_nosec"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "672",
+  "func": "sock_sendmsg",
+  "offset": "0xcf/0x120"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2345",
+  "func": "____sys_sendmsg",
+  "offset": "0x6b9/0x7d0"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2399",
+  "func": "___sys_sendmsg",
+  "offset": "0x100/0x170"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2432",
+  "func": "__sys_sendmsg",
+  "offset": "0xec/0x1b0"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "294",
+  "func": "do_syscall_64",
+  "offset": "0xf6/0x7d0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "72",
+  "func": "save_stack",
+  "offset": "0x1b/0x80"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "80",
+  "func": "set_track"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "337",
+  "func": "kasan_set_free_info"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "476",
+  "func": "__kasan_slab_free",
+  "offset": "0xf7/0x140"
+}
+{
+  "inline": true,
+  "file": "mm/slab.c",
+  "line": "3426",
+  "func": "__cache_free"
+}
+{
+  "inline": false,
+  "file": "mm/slab.c",
+  "line": "3757",
+  "func": "kfree",
+  "offset": "0x109/0x2b0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "590",
+  "func": "skb_free_head",
+  "offset": "0x8b/0xa0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "610",
+  "func": "skb_release_data",
+  "offset": "0x42e/0x8b0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "664",
+  "func": "skb_release_all",
+  "offset": "0x46/0x60"
+}
+{
+  "inline": true,
+  "file": "net/core/skbuff.c",
+  "line": "678",
+  "func": "__kfree_skb"
+}
+{
+  "inline": true,
+  "file": "net/core/skbuff.c",
+  "line": "837",
+  "func": "consume_skb"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "831",
+  "func": "consume_skb",
+  "offset": "0xf3/0x400"
+}
+{
+  "inline": true,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1304",
+  "func": "netlink_unicast_kernel"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1329",
+  "func": "netlink_unicast",
+  "offset": "0x53f/0x740"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1918",
+  "func": "netlink_sendmsg",
+  "offset": "0x882/0xe10"
+}
+{
+  "inline": true,
+  "file": "net/socket.c",
+  "line": "652",
+  "func": "sock_sendmsg_nosec"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "672",
+  "func": "sock_sendmsg",
+  "offset": "0xcf/0x120"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2345",
+  "func": "____sys_sendmsg",
+  "offset": "0x6b9/0x7d0"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2399",
+  "func": "___sys_sendmsg",
+  "offset": "0x100/0x170"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2432",
+  "func": "__sys_sendmsg",
+  "offset": "0xec/0x1b0"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "294",
+  "func": "do_syscall_64",
+  "offset": "0xf6/0x7d0"
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c */
+
+/* @@ -2274,6 +2274,9 @@ static int xfrm_add_acquire(struct sk_buff *skb, struct nlmsghdr *nlh, */
+	xfrm_mark_get(attrs, &mark);
+
+	err = verify_newpolicy_info(&ua->policy);
+	if (err)
+		goto free_state;
+
+</source_code>
+
+<trace_summary>
+Trace summary extracted from crash report:
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "77",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "118",
+  "func": "dump_stack",
+  "offset": "0x188/0x20d"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "374",
+  "func": "print_address_description.constprop.0.cold",
+  "offset": "0xd3/0x315"
+}
+
+</trace_summary>
+
+<hypotheses>
+{
+  "crash_type": "KASAN out-of-bounds access (heap buffer overflow)",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "suspicious_function_or_variable": "selinux_xfrm_alloc_user",
+      "root_cause_hypothesis": "In selinux_xfrm_alloc_user, a memcpy from user-supplied security context (uctx) copies more bytes than the allocated destination buffer can hold, causing a heap buffer overflow.",
+      "evidence": [
+        "Crash report shows KASAN report triggered by memcpy at security/selinux/xfrm.c:99 inside selinux_xfrm_alloc_user.",
+        "The call chain: xfrm_add_acquire -> xfrm_policy_construct -> copy_from_user_sec_ctx -> security_xfrm_policy_alloc -> selinux_xfrm_alloc_user -> memcpy.",
+        "The source code excerpt shows xfrm_add_acquire calls verify_newpolicy_info but does not validate the size of the security context before it is used in allocation/copy.",
+        "The trace summary highlights dump_stack and KASAN report functions, confirming a memory access violation."
+      ],
+      "repair_idea": "Add a bounds check in selinux_xfrm_alloc_user or its callers to ensure the copy length does not exceed the allocated buffer size, or validate the user-supplied length against a maximum allowed size.",
+      "uncertainty": "Low: the crash directly points to memcpy in selinux_xfrm_alloc_user, and the lack of size validation in the provided source snippet strongly supports this hypothesis."
+    },
+    {
+      "id": "H2",
+      "suspicious_function_or_variable": "copy_from_user_sec_ctx",
+      "root_cause_hypothesis": "copy_from_user_sec_ctx (inlined in xfrm_policy_construct) does not properly validate the length field from userspace before passing it to the security allocation hook, leading to an undersized allocation and subsequent overflow in selinux_xfrm_alloc_user.",
+      "evidence": [
+        "The stack trace shows copy_from_user_sec_ctx inlined at net/xfrm/xfrm_user.c:1462, called from xfrm_policy_construct.",
+        "The crash occurs later in selinux_xfrm_alloc_user during memcpy, suggesting the allocation size was derived from an unchecked user value.",
+        "The source code snippet only shows verify_newpolicy_info, which may not cover the security context length."
+      ],
+      "repair_idea": "In copy_from_user_sec_ctx or xfrm_policy_construct, add a check that the user-provided security context length is within a reasonable limit before calling the security hook.",
+      "uncertainty": "Medium: while the overflow manifests in selinux_xfrm_alloc_user, the root cause may be missing validation in the caller. The exact code of copy_from_user_sec_ctx is not provided."
+    },
+    {
+      "id": "H3",
+      "suspicious_function_or_variable": "xfrm_policy_construct",
+      "root_cause_hypothesis": "xfrm_policy_construct fails to validate the total size of the netlink message or the security context attribute, allowing a malformed or truncated attribute to cause an inconsistent length value, resulting in a heap overflow when the security context is copied.",
+      "evidence": [
+        "xfrm_policy_construct is the immediate caller of copy_from_user_sec_ctx and is responsible for parsing the netlink message.",
+        "The crash occurs during xfrm_add_acquire, which calls xfrm_policy_construct.",
+        "The provided source snippet shows only a partial view of xfrm_add_acquire; missing validation of the security context attribute could lead to the issue."
+      ],
+      "repair_idea": "Add robust attribute length validation in xfrm_policy_construct for the security context attribute, ensuring it matches the actual data size and does not exceed expected bounds.",
+      "uncertainty": "Medium: without the full code of xfrm_policy_construct, it is unclear whether the attribute parsing is flawed or the security module misuses the length."
+    }
+  ]
+}
+</hypotheses>
+
+Return strict JSON:
+{
+  "analysis": [
+    {
+      "hypothesis_id": "H1",
+      "strengths": ["..."],
+      "weaknesses": ["..."],
+      "evidence_consistency": "high"
+    }
+  ],
+  "selected_hypothesis_id": "...",
+  "selection_reason": "...",
+  "consistent_with_crash_report": true,
+  "consistent_with_stack_trace": true,
+  "consistent_with_source_code": true
+}
+

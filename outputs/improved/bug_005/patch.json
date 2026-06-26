@@ -1,0 +1,15 @@
+{
+  "edits": [
+    {
+      "file": "drivers/usb/usbip/vhci_hcd.c",
+      "original": "vhci_hcd->port_status[rhport] &= ~(1 << wValue);",
+      "replaced": "if (wValue < 32)\n\t\t\t\tvhci_hcd->port_status[rhport] &= ~(1U << wValue);",
+      "reason": "Add a bounds check to ensure wValue is less than 32 before performing the shift, preventing undefined behavior for values >= 32. Also change the shift base to unsigned (1U) to avoid signed integer overflow issues.",
+      "semantic_preservation_reason": "The check preserves the original behavior for all valid wValue inputs (0-31). For out-of-range values, the operation is skipped, which is safe because the default case already handles unknown feature selectors by logging a debug message; skipping the bit clear for invalid selectors does not affect correct port feature handling.",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "The shift-out-of-bounds UBSAN warning is eliminated. The driver continues to handle valid ClearPortFeature requests correctly, while invalid wValue inputs are safely ignored after the debug log.",
+  "why_not_amputation": "The fix does not remove or bypass the core functionality of clearing port features. It only adds a guard to prevent undefined behavior for out-of-range inputs, preserving the existing logic for all valid cases.",
+  "limitations": "If a future USB specification introduces port feature selectors with values >= 32, this code would need to be updated to handle them. Currently, no such selectors exist, so the check is safe."
+}

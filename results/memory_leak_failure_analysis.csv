@@ -1,0 +1,7 @@
+bug_id,group,manual_label,kernel_apply,primary_failure,failure_category
+bug_001,baseline,incorrect,fail,"edit cannot be applied to the real parent source","source grounding failure"
+bug_001,with_trace,incorrect,fail,"trace does not resolve source mismatch or ownership path","insufficient ownership evidence"
+bug_001,improved,incorrect,fail,"semantic constraints do not recover the missing cleanup path","guard without ownership analysis"
+bug_002,baseline,incorrect,no_edit,"model declines to generate a cleanup edit","no edit"
+bug_002,with_trace,incorrect,no_edit,"trace does not reveal the required frontend release path","no edit"
+bug_002,improved,incorrect,fail,"adds NULL checking instead of release on later I/O failure","wrong repair pattern"

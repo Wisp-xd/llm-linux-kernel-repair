@@ -1,0 +1,237 @@
+You are a Linux kernel patch generation assistant.
+
+Generate a replace-based edit patch based on the selected root-cause hypothesis. This task specifically tries to avoid amputation-style repairs, where a model removes, comments out, or bypasses core functionality only to make the crash disappear.
+
+Semantic guard constraints:
+1. Do not delete, comment out, or bypass core functional code to eliminate the crash.
+2. Do not add unjustified early returns. Early returns are allowed only when the source already has a clear error-handling path and the crash evidence supports it.
+3. For memory leaks, prefer completing resource release, reference-count rollback, or error-path cleanup.
+4. For out-of-bounds bugs, prefer adding necessary bounds checks while preserving normal processing branches.
+5. For null pointer dereferences, prefer adding necessary NULL checks while preserving the original behavior when the object exists.
+6. Each edit must explain why it preserves existing functionality.
+7. Each edit must mark amputation_risk as low, medium, or high.
+8. Keep changes limited to the localization file.
+
+<bug_id>
+bug_002
+</bug_id>
+
+<localization_file>
+drivers/media/usb/dvb-usb/cinergyT2-core.c
+</localization_file>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "552",
+  "func": "kmalloc"
+}
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "682",
+  "func": "kzalloc"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/cinergyT2-fe.c",
+  "line": "271",
+  "func": "cinergyt2_fe_attach",
+  "offset": "0x21/0x80"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/cinergyT2-core.c",
+  "line": "74",
+  "func": "cinergyt2_frontend_attach",
+  "offset": "0x21/0x70"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/dvb-usb-dvb.c",
+  "line": "290",
+  "func": "dvb_usb_adapter_frontend_init",
+  "offset": "0x11b/0x1b0"
+}
+{
+  "inline": true,
+  "file": "drivers/media/usb/dvb-usb/dvb-usb-init.c",
+  "line": "84",
+  "func": "dvb_usb_adapter_init"
+}
+{
+  "inline": true,
+  "file": "drivers/media/usb/dvb-usb/dvb-usb-init.c",
+  "line": "173",
+  "func": "dvb_usb_init"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/dvb-usb-init.c",
+  "line": "287",
+  "func": "dvb_usb_device_init.cold",
+  "offset": "0x4d0/0x6ae"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/driver.c",
+  "line": "396",
+  "func": "usb_probe_interface",
+  "offset": "0x177/0x370"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "561",
+  "func": "really_probe",
+  "offset": "0x159/0x480"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "745",
+  "func": "driver_probe_device",
+  "offset": "0x84/0x100"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "851",
+  "func": "__device_attach_driver",
+  "offset": "0xee/0x110"
+}
+{
+  "inline": false,
+  "file": "drivers/base/bus.c",
+  "line": "431",
+  "func": "bus_for_each_drv",
+  "offset": "0xb7/0x100"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "919",
+  "func": "__device_attach",
+  "offset": "0x122/0x250"
+}
+{
+  "inline": false,
+  "file": "drivers/base/bus.c",
+  "line": "491",
+  "func": "bus_probe_device",
+  "offset": "0xc6/0xe0"
+}
+{
+  "inline": false,
+  "file": "drivers/base/core.c",
+  "line": "3091",
+  "func": "device_add",
+  "offset": "0x5be/0xc30"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/message.c",
+  "line": "2164",
+  "func": "usb_set_configuration",
+  "offset": "0x9d9/0xb90"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/generic.c",
+  "line": "238",
+  "func": "usb_generic_driver_probe",
+  "offset": "0x8c/0xc0"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/driver.c",
+  "line": "293",
+  "func": "usb_probe_device",
+  "offset": "0x5c/0x140"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "561",
+  "func": "really_probe",
+  "offset": "0x159/0x480"
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/drivers/media/usb/dvb-usb/cinergyT2-core.c b/drivers/media/usb/dvb-usb/cinergyT2-core.c */
+
+/* @@ -78,6 +78,8 @@ static int cinergyt2_frontend_attach(struct dvb_usb_adapter *adap) */
+
+	ret = dvb_usb_generic_rw(d, st->data, 1, st->data, 3, 0);
+	if (ret < 0) {
+		deb_rc("cinergyt2_power_ctrl() Failed to retrieve sleep state info\n");
+	}
+	mutex_unlock(&d->data_mutex);
+
+</source_code>
+
+<trace_summary>
+Trace summary extracted from crash report:
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "552",
+  "func": "kmalloc"
+}
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "682",
+  "func": "kzalloc"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/cinergyT2-fe.c",
+  "line": "271",
+  "func": "cinergyt2_fe_attach",
+  "offset": "0x21/0x80"
+}
+{
+
+</trace_summary>
+
+<selected_hypothesis>
+{
+  "id": "H1",
+  "suspicious_function_or_variable": "cinergyt2_fe_attach",
+  "root_cause_hypothesis": "kzalloc in cinergyt2_fe_attach fails to allocate memory for the frontend state structure, but the return value is not checked, leading to a null pointer dereference when the pointer is subsequently used.",
+  "evidence": [
+    "Crash occurs in kzalloc called from cinergyt2_fe_attach at line 271 of cinergyT2-fe.c.",
+    "The trace shows the crash propagates through kmalloc -> kzalloc -> cinergyt2_fe_attach.",
+    "The source code excerpt shows no error handling after kzalloc, and the function likely proceeds to use the allocated pointer without checking for NULL."
+  ],
+  "repair_idea": "Add a null pointer check after the kzalloc call in cinergyt2_fe_attach and return an error code if allocation fails.",
+  "uncertainty": "Low - the crash location and missing error handling strongly suggest this is the root cause."
+}
+</selected_hypothesis>
+
+Return strict JSON:
+{
+  "edits": [
+    {
+      "file": "drivers/media/usb/dvb-usb/cinergyT2-core.c",
+      "original": "...",
+      "replaced": "...",
+      "reason": "...",
+      "semantic_preservation_reason": "...",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "...",
+  "why_not_amputation": "...",
+  "limitations": "..."
+}
+

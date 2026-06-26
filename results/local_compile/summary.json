@@ -1,0 +1,12 @@
+{
+  "bug_id": "bug_008",
+  "group": "improved",
+  "commit": "197b6b60ae7bc51dd0814953c562833143b292aa",
+  "target": "fs/namespace.o",
+  "repo": "/home/wisp/linux-local-compile/linux",
+  "build_dir": "/home/wisp/linux-local-compile/out-bug_008-improved",
+  "patch_apply_ok": true,
+  "defconfig_ok": true,
+  "local_compile_ok": true,
+  "notes": "local compile passed"
+}

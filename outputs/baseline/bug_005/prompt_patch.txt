@@ -1,0 +1,210 @@
+You are a Linux kernel patch generation assistant.
+
+Generate a candidate patch based on the selected root-cause hypothesis.
+
+Important requirements:
+1. Output replace-based edits only. Do not output a full git diff.
+2. Each edit must contain file, original, replaced, and reason.
+3. original must be a continuous snippet that appears exactly in the source code.
+4. replaced must be the complete replacement snippet.
+5. Keep the modification small and directly related to the selected hypothesis.
+6. Do not invent functions, macros, fields, or files.
+7. If no reliable patch can be generated, return an empty edits list and explain why.
+
+<bug_id>
+bug_005
+</bug_id>
+
+<localization_file>
+drivers/usb/usbip/vhci_hcd.c
+</localization_file>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "79",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "120",
+  "func": "dump_stack",
+  "offset": "0x107/0x163"
+}
+{
+  "inline": false,
+  "file": "lib/ubsan.c",
+  "line": "148",
+  "func": "ubsan_epilogue",
+  "offset": "0xb/0x5a"
+}
+{
+  "inline": false,
+  "file": "lib/ubsan.c",
+  "line": "395",
+  "func": "__ubsan_handle_shift_out_of_bounds.cold",
+  "offset": "0xb1/0x181"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/usbip/vhci_hcd.c",
+  "line": "399",
+  "func": "vhci_hub_control.cold",
+  "offset": "0x205/0x246"
+}
+{
+  "inline": true,
+  "file": "drivers/usb/core/hcd.c",
+  "line": "683",
+  "func": "rh_call_control"
+}
+{
+  "inline": true,
+  "file": "drivers/usb/core/hcd.c",
+  "line": "841",
+  "func": "rh_urb_enqueue"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/hcd.c",
+  "line": "1544",
+  "func": "usb_hcd_submit_urb",
+  "offset": "0xcaa/0x22d0"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/urb.c",
+  "line": "585",
+  "func": "usb_submit_urb",
+  "offset": "0x6e4/0x1560"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/message.c",
+  "line": "58",
+  "func": "usb_start_wait_urb",
+  "offset": "0x101/0x4c0"
+}
+{
+  "inline": true,
+  "file": "drivers/usb/core/message.c",
+  "line": "102",
+  "func": "usb_internal_control_msg"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/message.c",
+  "line": "153",
+  "func": "usb_control_msg",
+  "offset": "0x31c/0x4a0"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/devio.c",
+  "line": "1165",
+  "func": "do_proc_control",
+  "offset": "0x4cb/0x9c0"
+}
+{
+  "inline": true,
+  "file": "drivers/usb/core/devio.c",
+  "line": "1191",
+  "func": "proc_control"
+}
+{
+  "inline": true,
+  "file": "drivers/usb/core/devio.c",
+  "line": "2535",
+  "func": "usbdev_do_ioctl"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/devio.c",
+  "line": "2708",
+  "func": "usbdev_ioctl",
+  "offset": "0x12c1/0x3b20"
+}
+{
+  "inline": true,
+  "file": "fs/ioctl.c",
+  "line": "48",
+  "func": "vfs_ioctl"
+}
+{
+  "inline": true,
+  "file": "fs/ioctl.c",
+  "line": "753",
+  "func": "__do_sys_ioctl"
+}
+{
+  "inline": true,
+  "file": "fs/ioctl.c",
+  "line": "739",
+  "func": "__se_sys_ioctl"
+}
+{
+  "inline": false,
+  "file": "fs/ioctl.c",
+  "line": "739",
+  "func": "__x64_sys_ioctl",
+  "offset": "0x193/0x200"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "46",
+  "func": "do_syscall_64",
+  "offset": "0x2d/0x70"
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/drivers/usb/usbip/vhci_hcd.c b/drivers/usb/usbip/vhci_hcd.c */
+
+/* @@ -396,6 +396,8 @@ static int vhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue, */
+		default:
+			usbip_dbg_vhci_rh(" ClearPortFeature: default %x\n",
+					  wValue);
+			vhci_hcd->port_status[rhport] &= ~(1 << wValue);
+			break;
+		}
+
+</source_code>
+
+<selected_hypothesis>
+{
+  "id": "H1",
+  "suspicious_function_or_variable": "vhci_hub_control",
+  "root_cause_hypothesis": "In vhci_hub_control, the expression '1 << wValue' causes an undefined shift when wValue is 31 or greater, because 1 is an int (32-bit) and shifting by >=31 bits is undefined behavior in C. The UBSAN report triggers from this exact line.",
+  "evidence": [
+    "Crash report shows __ubsan_handle_shift_out_of_bounds called from vhci_hub_control.cold at line 399.",
+    "Source code excerpt shows 'vhci_hcd->port_status[rhport] &= ~(1 << wValue);' where wValue is a u16 parameter.",
+    "UBSAN shift-out-of-bounds occurs when shift amount >= bit-width of the left operand type (int)."
+  ],
+  "repair_idea": "Change '1 << wValue' to '1U << wValue' or use BIT() macro to ensure unsigned shift, or add a check to limit wValue to 31.",
+  "uncertainty": "Low - the crash directly points to this line and the shift is clearly unsafe."
+}
+</selected_hypothesis>
+
+Return strict JSON:
+{
+  "edits": [
+    {
+      "file": "drivers/usb/usbip/vhci_hcd.c",
+      "original": "...",
+      "replaced": "...",
+      "reason": "..."
+    }
+  ],
+  "expected_effect": "...",
+  "limitations": "..."
+}
+

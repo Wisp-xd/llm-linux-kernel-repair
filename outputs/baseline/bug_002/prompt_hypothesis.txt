@@ -1,0 +1,194 @@
+You are a Linux kernel crash analysis assistant.
+
+Analyze the following crash report, source code, and optional trace summary. Generate root-cause hypotheses before producing any patch.
+
+Requirements:
+1. Do not generate code patches in this step.
+2. Identify the crash type, such as memory leak, UBSAN out-of-bounds, null pointer dereference, warning, or other.
+3. Identify suspicious functions, variables, fields, or resources.
+4. Generate three ranked hypotheses.
+5. Every hypothesis must cite evidence from the crash report, stack trace, source code, or trace summary.
+6. If evidence is insufficient, explicitly state uncertainty.
+7. If a trace summary is provided, prioritize functions appearing in that trace.
+
+<bug_id>
+bug_002
+</bug_id>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "552",
+  "func": "kmalloc"
+}
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "682",
+  "func": "kzalloc"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/cinergyT2-fe.c",
+  "line": "271",
+  "func": "cinergyt2_fe_attach",
+  "offset": "0x21/0x80"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/cinergyT2-core.c",
+  "line": "74",
+  "func": "cinergyt2_frontend_attach",
+  "offset": "0x21/0x70"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/dvb-usb-dvb.c",
+  "line": "290",
+  "func": "dvb_usb_adapter_frontend_init",
+  "offset": "0x11b/0x1b0"
+}
+{
+  "inline": true,
+  "file": "drivers/media/usb/dvb-usb/dvb-usb-init.c",
+  "line": "84",
+  "func": "dvb_usb_adapter_init"
+}
+{
+  "inline": true,
+  "file": "drivers/media/usb/dvb-usb/dvb-usb-init.c",
+  "line": "173",
+  "func": "dvb_usb_init"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/dvb-usb-init.c",
+  "line": "287",
+  "func": "dvb_usb_device_init.cold",
+  "offset": "0x4d0/0x6ae"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/driver.c",
+  "line": "396",
+  "func": "usb_probe_interface",
+  "offset": "0x177/0x370"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "561",
+  "func": "really_probe",
+  "offset": "0x159/0x480"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "745",
+  "func": "driver_probe_device",
+  "offset": "0x84/0x100"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "851",
+  "func": "__device_attach_driver",
+  "offset": "0xee/0x110"
+}
+{
+  "inline": false,
+  "file": "drivers/base/bus.c",
+  "line": "431",
+  "func": "bus_for_each_drv",
+  "offset": "0xb7/0x100"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "919",
+  "func": "__device_attach",
+  "offset": "0x122/0x250"
+}
+{
+  "inline": false,
+  "file": "drivers/base/bus.c",
+  "line": "491",
+  "func": "bus_probe_device",
+  "offset": "0xc6/0xe0"
+}
+{
+  "inline": false,
+  "file": "drivers/base/core.c",
+  "line": "3091",
+  "func": "device_add",
+  "offset": "0x5be/0xc30"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/message.c",
+  "line": "2164",
+  "func": "usb_set_configuration",
+  "offset": "0x9d9/0xb90"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/generic.c",
+  "line": "238",
+  "func": "usb_generic_driver_probe",
+  "offset": "0x8c/0xc0"
+}
+{
+  "inline": false,
+  "file": "drivers/usb/core/driver.c",
+  "line": "293",
+  "func": "usb_probe_device",
+  "offset": "0x5c/0x140"
+}
+{
+  "inline": false,
+  "file": "drivers/base/dd.c",
+  "line": "561",
+  "func": "really_probe",
+  "offset": "0x159/0x480"
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/drivers/media/usb/dvb-usb/cinergyT2-core.c b/drivers/media/usb/dvb-usb/cinergyT2-core.c */
+
+/* @@ -78,6 +78,8 @@ static int cinergyt2_frontend_attach(struct dvb_usb_adapter *adap) */
+
+	ret = dvb_usb_generic_rw(d, st->data, 1, st->data, 3, 0);
+	if (ret < 0) {
+		deb_rc("cinergyt2_power_ctrl() Failed to retrieve sleep state info\n");
+	}
+	mutex_unlock(&d->data_mutex);
+
+</source_code>
+
+<trace_summary>
+
+</trace_summary>
+
+Return strict JSON:
+{
+  "crash_type": "...",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "suspicious_function_or_variable": "...",
+      "root_cause_hypothesis": "...",
+      "evidence": ["...", "..."],
+      "repair_idea": "...",
+      "uncertainty": "..."
+    }
+  ]
+}
+

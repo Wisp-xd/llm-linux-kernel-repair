@@ -1,0 +1,41 @@
+{
+  "crash_type": "KASAN out-of-bounds (use-after-free or invalid access)",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "suspicious_function_or_variable": "selinux_xfrm_alloc_user",
+      "root_cause_hypothesis": "A use-after-free or out-of-bounds access occurs when copying security context via memcpy in selinux_xfrm_alloc_user. The source pointer (ctx->ctx_str) or destination buffer may be freed or incorrectly sized, leading to KASAN detecting an invalid memory access.",
+      "evidence": [
+        "Crash report shows KASAN report triggered from memcpy at security/selinux/xfrm.c:99 inside selinux_xfrm_alloc_user.",
+        "Stack trace: selinux_xfrm_alloc_user -> memcpy -> check_memory_region -> kasan_report.",
+        "The crash is a KASAN out-of-bounds report, indicating an invalid memory access during memcpy."
+      ],
+      "repair_idea": "Validate that ctx->ctx_str and the destination buffer are properly allocated and sized before memcpy. Ensure ctx is not freed before this point and that ctx_len matches the actual allocation.",
+      "uncertainty": "Medium - exact root cause (use-after-free vs. buffer overflow) not fully clear without seeing the full selinux_xfrm_alloc_user implementation and the lifetime of ctx."
+    },
+    {
+      "id": "H2",
+      "suspicious_function_or_variable": "xfrm_policy_construct / copy_from_user_sec_ctx",
+      "root_cause_hypothesis": "The user-supplied security context length (ctx_len) is not properly validated, causing an undersized allocation or allowing a copy that exceeds the allocated buffer. This leads to a heap buffer overflow detected by KASAN when the context is later used in selinux_xfrm_alloc_user.",
+      "evidence": [
+        "Stack trace includes xfrm_policy_construct -> copy_from_user_sec_ctx -> security_xfrm_policy_alloc -> selinux_xfrm_alloc_user.",
+        "The source code snippet shows verify_newpolicy_info is called, but no explicit check on ctx_len is visible.",
+        "KASAN report originates from memcpy inside selinux_xfrm_alloc_user, suggesting the destination buffer is too small for the copied data."
+      ],
+      "repair_idea": "Add strict bounds checking on ctx_len in xfrm_policy_construct or copy_from_user_sec_ctx before allocation, ensuring it does not exceed a safe maximum or the actual user-provided data size.",
+      "uncertainty": "Medium - the exact location of missing validation is unclear without full source of copy_from_user_sec_ctx and xfrm_policy_construct."
+    },
+    {
+      "id": "H3",
+      "suspicious_function_or_variable": "xfrm_add_acquire / ua->policy",
+      "root_cause_hypothesis": "The user policy structure (ua->policy) is freed or corrupted before selinux_xfrm_alloc_user accesses its security context, resulting in a use-after-free when memcpy reads ctx->ctx_str.",
+      "evidence": [
+        "The crash occurs during xfrm_add_acquire processing, as seen in the stack trace.",
+        "The source snippet shows an error path 'goto free_state' after verify_newpolicy_info, which might free the policy while it is still referenced later.",
+        "KASAN report indicates invalid access during memcpy, consistent with use-after-free."
+      ],
+      "repair_idea": "Ensure that the policy and its security context are not freed until after selinux_xfrm_alloc_user completes. Review error handling paths in xfrm_add_acquire to avoid premature freeing.",
+      "uncertainty": "High - the exact freeing path is not shown in the provided source snippet, and the crash may be due to a different lifetime issue."
+    }
+  ]
+}

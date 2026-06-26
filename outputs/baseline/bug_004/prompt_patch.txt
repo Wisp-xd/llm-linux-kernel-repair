@@ -1,0 +1,487 @@
+You are a Linux kernel patch generation assistant.
+
+Generate a candidate patch based on the selected root-cause hypothesis.
+
+Important requirements:
+1. Output replace-based edits only. Do not output a full git diff.
+2. Each edit must contain file, original, replaced, and reason.
+3. original must be a continuous snippet that appears exactly in the source code.
+4. replaced must be the complete replacement snippet.
+5. Keep the modification small and directly related to the selected hypothesis.
+6. Do not invent functions, macros, fields, or files.
+7. If no reliable patch can be generated, return an empty edits list and explain why.
+
+<bug_id>
+bug_004
+</bug_id>
+
+<localization_file>
+net/xfrm/xfrm_user.c
+</localization_file>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "77",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "118",
+  "func": "dump_stack",
+  "offset": "0x188/0x20d"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "374",
+  "func": "print_address_description.constprop.0.cold",
+  "offset": "0xd3/0x315"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "506",
+  "func": "__kasan_report.cold",
+  "offset": "0x1a/0x32"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "641",
+  "func": "kasan_report",
+  "offset": "0xe/0x20"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/generic.c",
+  "line": "185",
+  "func": "check_memory_region_inline"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/generic.c",
+  "line": "192",
+  "func": "check_memory_region",
+  "offset": "0x128/0x190"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "127",
+  "func": "memcpy",
+  "offset": "0x20/0x50"
+}
+{
+  "inline": true,
+  "file": "include/linux/string.h",
+  "line": "381",
+  "func": "memcpy"
+}
+{
+  "inline": false,
+  "file": "security/selinux/xfrm.c",
+  "line": "99",
+  "func": "selinux_xfrm_alloc_user",
+  "offset": "0x23e/0x450"
+}
+{
+  "inline": false,
+  "file": "security/security.c",
+  "line": "2263",
+  "func": "security_xfrm_policy_alloc",
+  "offset": "0x6c/0xb0"
+}
+{
+  "inline": true,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "1462",
+  "func": "copy_from_user_sec_ctx"
+}
+{
+  "inline": false,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "1627",
+  "func": "xfrm_policy_construct",
+  "offset": "0x2a8/0x660"
+}
+{
+  "inline": false,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "2280",
+  "func": "xfrm_add_acquire",
+  "offset": "0x215/0x9f0"
+}
+{
+  "inline": false,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "2676",
+  "func": "xfrm_user_rcv_msg",
+  "offset": "0x414/0x700"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "2469",
+  "func": "netlink_rcv_skb",
+  "offset": "0x15a/0x410"
+}
+{
+  "inline": false,
+  "file": "net/xfrm/xfrm_user.c",
+  "line": "2684",
+  "func": "xfrm_netlink_rcv",
+  "offset": "0x6b/0x90"
+}
+{
+  "inline": true,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1303",
+  "func": "netlink_unicast_kernel"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1329",
+  "func": "netlink_unicast",
+  "offset": "0x537/0x740"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1918",
+  "func": "netlink_sendmsg",
+  "offset": "0x882/0xe10"
+}
+{
+  "inline": true,
+  "file": "net/socket.c",
+  "line": "652",
+  "func": "sock_sendmsg_nosec"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "672",
+  "func": "sock_sendmsg",
+  "offset": "0xcf/0x120"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2345",
+  "func": "____sys_sendmsg",
+  "offset": "0x6b9/0x7d0"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2399",
+  "func": "___sys_sendmsg",
+  "offset": "0x100/0x170"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2432",
+  "func": "__sys_sendmsg",
+  "offset": "0xec/0x1b0"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "294",
+  "func": "do_syscall_64",
+  "offset": "0xf6/0x7d0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "72",
+  "func": "save_stack",
+  "offset": "0x1b/0x80"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "80",
+  "func": "set_track"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "515",
+  "func": "__kasan_kmalloc"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "488",
+  "func": "__kasan_kmalloc.constprop.0",
+  "offset": "0xbf/0xd0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "142",
+  "func": "__kmalloc_reserve.isra.0",
+  "offset": "0x39/0xe0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "210",
+  "func": "__alloc_skb",
+  "offset": "0xef/0x5a0"
+}
+{
+  "inline": true,
+  "file": "include/linux/skbuff.h",
+  "line": "1083",
+  "func": "alloc_skb"
+}
+{
+  "inline": true,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1175",
+  "func": "netlink_alloc_large_skb"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1893",
+  "func": "netlink_sendmsg",
+  "offset": "0x97b/0xe10"
+}
+{
+  "inline": true,
+  "file": "net/socket.c",
+  "line": "652",
+  "func": "sock_sendmsg_nosec"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "672",
+  "func": "sock_sendmsg",
+  "offset": "0xcf/0x120"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2345",
+  "func": "____sys_sendmsg",
+  "offset": "0x6b9/0x7d0"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2399",
+  "func": "___sys_sendmsg",
+  "offset": "0x100/0x170"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2432",
+  "func": "__sys_sendmsg",
+  "offset": "0xec/0x1b0"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "294",
+  "func": "do_syscall_64",
+  "offset": "0xf6/0x7d0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "72",
+  "func": "save_stack",
+  "offset": "0x1b/0x80"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "80",
+  "func": "set_track"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "337",
+  "func": "kasan_set_free_info"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "476",
+  "func": "__kasan_slab_free",
+  "offset": "0xf7/0x140"
+}
+{
+  "inline": true,
+  "file": "mm/slab.c",
+  "line": "3426",
+  "func": "__cache_free"
+}
+{
+  "inline": false,
+  "file": "mm/slab.c",
+  "line": "3757",
+  "func": "kfree",
+  "offset": "0x109/0x2b0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "590",
+  "func": "skb_free_head",
+  "offset": "0x8b/0xa0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "610",
+  "func": "skb_release_data",
+  "offset": "0x42e/0x8b0"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "664",
+  "func": "skb_release_all",
+  "offset": "0x46/0x60"
+}
+{
+  "inline": true,
+  "file": "net/core/skbuff.c",
+  "line": "678",
+  "func": "__kfree_skb"
+}
+{
+  "inline": true,
+  "file": "net/core/skbuff.c",
+  "line": "837",
+  "func": "consume_skb"
+}
+{
+  "inline": false,
+  "file": "net/core/skbuff.c",
+  "line": "831",
+  "func": "consume_skb",
+  "offset": "0xf3/0x400"
+}
+{
+  "inline": true,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1304",
+  "func": "netlink_unicast_kernel"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1329",
+  "func": "netlink_unicast",
+  "offset": "0x53f/0x740"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1918",
+  "func": "netlink_sendmsg",
+  "offset": "0x882/0xe10"
+}
+{
+  "inline": true,
+  "file": "net/socket.c",
+  "line": "652",
+  "func": "sock_sendmsg_nosec"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "672",
+  "func": "sock_sendmsg",
+  "offset": "0xcf/0x120"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2345",
+  "func": "____sys_sendmsg",
+  "offset": "0x6b9/0x7d0"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2399",
+  "func": "___sys_sendmsg",
+  "offset": "0x100/0x170"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2432",
+  "func": "__sys_sendmsg",
+  "offset": "0xec/0x1b0"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "294",
+  "func": "do_syscall_64",
+  "offset": "0xf6/0x7d0"
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c */
+
+/* @@ -2274,6 +2274,9 @@ static int xfrm_add_acquire(struct sk_buff *skb, struct nlmsghdr *nlh, */
+	xfrm_mark_get(attrs, &mark);
+
+	err = verify_newpolicy_info(&ua->policy);
+	if (err)
+		goto free_state;
+
+</source_code>
+
+<selected_hypothesis>
+{
+  "id": "H1",
+  "suspicious_function_or_variable": "selinux_xfrm_alloc_user",
+  "root_cause_hypothesis": "A use-after-free or out-of-bounds access occurs when copying security context via memcpy in selinux_xfrm_alloc_user. The source pointer (ctx->ctx_str) or destination buffer may be freed or incorrectly sized, leading to KASAN detecting an invalid memory access.",
+  "evidence": [
+    "Crash report shows KASAN report triggered from memcpy at security/selinux/xfrm.c:99 inside selinux_xfrm_alloc_user.",
+    "Stack trace: selinux_xfrm_alloc_user -> memcpy -> check_memory_region -> kasan_report.",
+    "The crash is a KASAN out-of-bounds report, indicating an invalid memory access during memcpy."
+  ],
+  "repair_idea": "Validate that ctx->ctx_str and the destination buffer are properly allocated and sized before memcpy. Ensure ctx is not freed before this point and that ctx_len matches the actual allocation.",
+  "uncertainty": "Medium - exact root cause (use-after-free vs. buffer overflow) not fully clear without seeing the full selinux_xfrm_alloc_user implementation and the lifetime of ctx."
+}
+</selected_hypothesis>
+
+Return strict JSON:
+{
+  "edits": [
+    {
+      "file": "net/xfrm/xfrm_user.c",
+      "original": "...",
+      "replaced": "...",
+      "reason": "..."
+    }
+  ],
+  "expected_effect": "...",
+  "limitations": "..."
+}
+

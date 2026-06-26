@@ -1,0 +1,5 @@
+{
+  "edits": [],
+  "expected_effect": "No patch generated because the root cause is in security/selinux/xfrm.c, not in net/xfrm/xfrm_user.c. The provided source excerpt from xfrm_user.c does not contain the vulnerable memcpy call or the surrounding context needed to apply a fix. A patch would require modifying selinux_xfrm_alloc_user to validate ctx and ctx_len before memcpy, but that file is not available.",
+  "limitations": "The crash occurs in selinux_xfrm_alloc_user at security/selinux/xfrm.c:99, which is outside the provided localization file (net/xfrm/xfrm_user.c). Without the source code for selinux_xfrm_alloc_user, a reliable patch cannot be generated."
+}

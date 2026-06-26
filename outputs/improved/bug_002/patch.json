@@ -1,0 +1,15 @@
+{
+  "edits": [
+    {
+      "file": "drivers/media/usb/dvb-usb/cinergyT2-core.c",
+      "original": "static int cinergyt2_frontend_attach(struct dvb_usb_adapter *adap)\n{\n\tstruct dvb_usb_device *d = adap->dev;\n\tstruct cinergyt2_state *st = d->priv;\n\tint ret;\n\n\tmutex_lock(&d->data_mutex);\n\tst->data[0] = CINERGYT2_EP1_SLEEP_MODE;\n\n\tret = dvb_usb_generic_rw(d, st->data, 1, st->data, 3, 0);\n\tif (ret < 0) {\n\t\tdeb_rc(\"cinergyt2_power_ctrl() Failed to retrieve sleep state info\\n\");\n\t}\n\tmutex_unlock(&d->data_mutex);\n\n\tadap->fe_adap[0].fe = cinergyt2_fe_attach(adap->dev);\n\n\treturn 0;\n}",
+      "replaced": "static int cinergyt2_frontend_attach(struct dvb_usb_adapter *adap)\n{\n\tstruct dvb_usb_device *d = adap->dev;\n\tstruct cinergyt2_state *st = d->priv;\n\tint ret;\n\n\tmutex_lock(&d->data_mutex);\n\tst->data[0] = CINERGYT2_EP1_SLEEP_MODE;\n\n\tret = dvb_usb_generic_rw(d, st->data, 1, st->data, 3, 0);\n\tif (ret < 0) {\n\t\tdeb_rc(\"cinergyt2_power_ctrl() Failed to retrieve sleep state info\\n\");\n\t}\n\tmutex_unlock(&d->data_mutex);\n\n\tadap->fe_adap[0].fe = cinergyt2_fe_attach(adap->dev);\n\tif (!adap->fe_adap[0].fe)\n\t\treturn -ENOMEM;\n\n\treturn 0;\n}",
+      "reason": "Add a NULL check after cinergyt2_fe_attach() to handle kzalloc failure in the called function, preventing a null pointer dereference later.",
+      "semantic_preservation_reason": "The check preserves the existing attach logic when allocation succeeds; it only adds an error return path for the failure case, which is standard kernel error handling.",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "If cinergyt2_fe_attach() fails to allocate memory, cinergyt2_frontend_attach() will now return -ENOMEM instead of proceeding with a NULL frontend pointer, avoiding the crash.",
+  "why_not_amputation": "The fix adds a necessary error check without removing or bypassing any core functionality. The frontend attach operation is still attempted normally.",
+  "limitations": "This fix only addresses the null pointer dereference in cinergyt2_frontend_attach(). The underlying kzalloc failure in cinergyt2_fe_attach() may still need a separate error return path if it doesn't already have one, but that is outside the localization file."
+}

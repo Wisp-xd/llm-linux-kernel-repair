@@ -1,0 +1,9 @@
+metric,with_trace,improved,absolute_change,percentage_point_change
+plausible,0/8,1/8,+1,+12.5
+helpful,3/8,3/8,0,0.0
+plausible_plus_helpful,3/8,4/8,+1,+12.5
+incorrect,5/8,4/8,-1,-12.5
+patch_apply_ok,2/8,5/8,+3,+37.5
+diff_check_ok,2/8,5/8,+3,+37.5
+no_edit,4/8,0/8,-4,-50.0
+checkpatch_warnings,0,2,+2,

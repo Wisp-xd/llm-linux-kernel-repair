@@ -1,0 +1,25 @@
+bug_id,bug_type,group,final_label,expected_localization_file,proposed_files,localization_status,localization_correct,patch_apply_status,compile_status,crash_elimination_status,dynamic_validation_runs,developer_file_overlap,developer_diff_similarity,api_cost_usd,api_cost_status,prompt_tokens,completion_tokens,retry_count,retry_count_status
+bug_001,memory leak,baseline,incorrect,net/netfilter/nf_tables_api.c,net/netfilter/nf_tables_api.c,correct,True,failed,not_run,not_run,,1.0,0.0,,unknown,,,,unknown
+bug_001,memory leak,with_trace,incorrect,net/netfilter/nf_tables_api.c,net/netfilter/nf_tables_api.c,correct,True,failed,not_run,not_run,,1.0,0.0,,unknown,,,,unknown
+bug_001,memory leak,improved,incorrect,net/netfilter/nf_tables_api.c,net/netfilter/nf_tables_api.c,correct,True,failed,not_run,not_run,,1.0,0.0,,unknown,,,,unknown
+bug_002,memory leak,baseline,incorrect,drivers/media/usb/dvb-usb/cinergyT2-core.c,,not_proposed,False,failed,not_run,not_run,,0.0,0.0,,unknown,,,,unknown
+bug_002,memory leak,with_trace,incorrect,drivers/media/usb/dvb-usb/cinergyT2-core.c,,not_proposed,False,failed,not_run,not_run,,0.0,0.0,,unknown,,,,unknown
+bug_002,memory leak,improved,incorrect,drivers/media/usb/dvb-usb/cinergyT2-core.c,drivers/media/usb/dvb-usb/cinergyT2-core.c,correct,True,failed,not_run,not_run,,1.0,0.5156,,unknown,,,,unknown
+bug_003,out_of_bounds,baseline,helpful,kernel/printk/printk.c,kernel/printk/printk.c,correct,True,passed,not_run,not_run,,1.0,0.2268,,unknown,,,,unknown
+bug_003,out_of_bounds,with_trace,helpful,kernel/printk/printk.c,kernel/printk/printk.c,correct,True,passed,not_run,not_run,,1.0,0.2268,,unknown,,,,unknown
+bug_003,out_of_bounds,improved,helpful,kernel/printk/printk.c,kernel/printk/printk.c,correct,True,passed,not_run,not_run,,1.0,0.2716,,unknown,,,,unknown
+bug_004,out_of_bounds,baseline,incorrect,net/xfrm/xfrm_user.c,,not_proposed,False,failed,not_run,not_run,,0.0,0.0,,unknown,,,,unknown
+bug_004,out_of_bounds,with_trace,helpful,net/xfrm/xfrm_user.c,net/xfrm/xfrm_user.c,correct,True,failed,not_run,not_run,,1.0,0.2727,,unknown,,,,unknown
+bug_004,out_of_bounds,improved,helpful,net/xfrm/xfrm_user.c,net/xfrm/xfrm_user.c,correct,True,passed,not_run,not_run,,1.0,0.2255,,unknown,,,,unknown
+bug_005,out_of_bounds,baseline,incorrect,drivers/usb/usbip/vhci_hcd.c,drivers/usb/usbip/vhci_hcd.c,correct,True,passed,not_run,not_run,,1.0,0.2519,,unknown,,,,unknown
+bug_005,out_of_bounds,with_trace,helpful,drivers/usb/usbip/vhci_hcd.c,drivers/usb/usbip/vhci_hcd.c,correct,True,passed,not_run,not_run,,1.0,0.2987,,unknown,,,,unknown
+bug_005,out_of_bounds,improved,helpful,drivers/usb/usbip/vhci_hcd.c,drivers/usb/usbip/vhci_hcd.c,correct,True,passed,not_run,not_run,,1.0,0.2987,,unknown,,,,unknown
+bug_006,null_pointer,baseline,incorrect,mm/filemap.c,,not_proposed,False,failed,not_run,not_run,,0.0,0.0,,unknown,,,,unknown
+bug_006,null_pointer,with_trace,incorrect,mm/filemap.c,,not_proposed,False,failed,not_run,not_run,,0.0,0.0,,unknown,,,,unknown
+bug_006,null_pointer,improved,incorrect,mm/filemap.c,mm/filemap.c,correct,True,passed,not_run,not_run,,1.0,0.6173,,unknown,,,,unknown
+bug_007,null_pointer,baseline,incorrect,drivers/media/common/videobuf2/videobuf2-core.c,,not_proposed,False,failed,not_run,not_run,,0.0,0.0,,unknown,,,,unknown
+bug_007,null_pointer,with_trace,incorrect,drivers/media/common/videobuf2/videobuf2-core.c,,not_proposed,False,failed,not_run,not_run,,0.0,0.0,,unknown,,,,unknown
+bug_007,null_pointer,improved,incorrect,drivers/media/common/videobuf2/videobuf2-core.c,drivers/media/common/videobuf2/videobuf2-core.c,correct,True,failed,not_run,not_run,,1.0,0.3333,,unknown,,,,unknown
+bug_008,null_pointer,baseline,plausible,fs/namespace.c,fs/namespace.c,correct,True,passed,not_run,not_run,,1.0,1.0,,unknown,,,,unknown
+bug_008,null_pointer,with_trace,incorrect,fs/namespace.c,,not_proposed,False,failed,not_run,not_run,,0.0,0.0,,unknown,,,,unknown
+bug_008,null_pointer,improved,plausible,fs/namespace.c,fs/namespace.c,correct,True,passed,passed,passed,3,1.0,1.0,,unknown,,,,unknown

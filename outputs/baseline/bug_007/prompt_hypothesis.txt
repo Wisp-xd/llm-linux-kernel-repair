@@ -1,0 +1,259 @@
+You are a Linux kernel crash analysis assistant.
+
+Analyze the following crash report, source code, and optional trace summary. Generate root-cause hypotheses before producing any patch.
+
+Requirements:
+1. Do not generate code patches in this step.
+2. Identify the crash type, such as memory leak, UBSAN out-of-bounds, null pointer dereference, warning, or other.
+3. Identify suspicious functions, variables, fields, or resources.
+4. Generate three ranked hypotheses.
+5. Every hypothesis must cite evidence from the crash report, stack trace, source code, or trace summary.
+6. If evidence is insufficient, explicitly state uncertainty.
+7. If a trace summary is provided, prioritize functions appearing in that trace.
+
+<bug_id>
+bug_007
+</bug_id>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "77",
+  "func": "__dump_stack"
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "113",
+  "func": "dump_stack",
+  "offset": "0x244/0x39d"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/report.c",
+  "line": "352",
+  "func": "kasan_report_error"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "412",
+  "func": "kasan_report.cold.8",
+  "offset": "0x6d/0x309"
+}
+{
+  "inline": true,
+  "file": "mm/kasan/kasan.c",
+  "line": "260",
+  "func": "check_memory_region_inline"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/kasan.c",
+  "line": "267",
+  "func": "check_memory_region",
+  "offset": "0x13e/0x1b0"
+}
+{
+  "inline": false,
+  "file": "mm/kasan/kasan.c",
+  "line": "272",
+  "func": "kasan_check_read",
+  "offset": "0x11/0x20"
+}
+{
+  "inline": true,
+  "file": "include/asm-generic/atomic-instrumented.h",
+  "line": "21",
+  "func": "atomic_read"
+}
+{
+  "inline": false,
+  "file": "lib/refcount.c",
+  "line": "179",
+  "func": "refcount_sub_and_test_checked",
+  "offset": "0x9d/0x310"
+}
+{
+  "inline": false,
+  "file": "lib/refcount.c",
+  "line": "212",
+  "func": "refcount_dec_and_test_checked",
+  "offset": "0x1a/0x20"
+}
+{
+  "inline": false,
+  "file": "drivers/media/common/videobuf2/videobuf2-vmalloc.c",
+  "line": "68",
+  "func": "vb2_vmalloc_put",
+  "offset": "0x19/0x80"
+}
+{
+  "inline": false,
+  "file": "drivers/media/common/videobuf2/videobuf2-core.c",
+  "line": "242",
+  "func": "__vb2_buf_mem_free",
+  "offset": "0x112/0x210"
+}
+{
+  "inline": true,
+  "file": "drivers/media/common/videobuf2/videobuf2-core.c",
+  "line": "413",
+  "func": "__vb2_free_mem"
+}
+{
+  "inline": false,
+  "file": "drivers/media/common/videobuf2/videobuf2-core.c",
+  "line": "458",
+  "func": "__vb2_queue_free",
+  "offset": "0x830/0xa30"
+}
+{
+  "inline": false,
+  "file": "drivers/media/common/videobuf2/videobuf2-core.c",
+  "line": "2231",
+  "func": "vb2_core_queue_release",
+  "offset": "0x62/0x80"
+}
+{
+  "inline": true,
+  "file": "drivers/media/common/videobuf2/videobuf2-v4l2.c",
+  "line": "837",
+  "func": "vb2_queue_release"
+}
+{
+  "inline": false,
+  "file": "drivers/media/common/videobuf2/videobuf2-v4l2.c",
+  "line": "1010",
+  "func": "_vb2_fop_release",
+  "offset": "0x1d2/0x2b0"
+}
+{
+  "inline": false,
+  "file": "drivers/media/common/videobuf2/videobuf2-v4l2.c",
+  "line": "1024",
+  "func": "vb2_fop_release",
+  "offset": "0x77/0xc0"
+}
+{
+  "inline": false,
+  "file": "drivers/media/platform/vivid/vivid-core.c",
+  "line": "474",
+  "func": "vivid_fop_release",
+  "offset": "0x18e/0x440"
+}
+{
+  "inline": false,
+  "file": "drivers/media/v4l2-core/v4l2-dev.c",
+  "line": "456",
+  "func": "v4l2_release",
+  "offset": "0x224/0x3a0"
+}
+{
+  "inline": false,
+  "file": "fs/file_table.c",
+  "line": "278",
+  "func": "__fput",
+  "offset": "0x385/0xa30"
+}
+{
+  "inline": false,
+  "file": "fs/file_table.c",
+  "line": "309",
+  "func": "____fput",
+  "offset": "0x15/0x20"
+}
+{
+  "inline": false,
+  "file": "kernel/task_work.c",
+  "line": "113",
+  "func": "task_work_run",
+  "offset": "0x1e8/0x2a0"
+}
+{
+  "inline": true,
+  "file": "include/linux/task_work.h",
+  "line": "22",
+  "func": "exit_task_work"
+}
+{
+  "inline": false,
+  "file": "kernel/exit.c",
+  "line": "867",
+  "func": "do_exit",
+  "offset": "0x1ad6/0x26d0"
+}
+{
+  "inline": false,
+  "file": "kernel/exit.c",
+  "line": "970",
+  "func": "do_group_exit",
+  "offset": "0x177/0x440"
+}
+{
+  "inline": true,
+  "file": "kernel/exit.c",
+  "line": "981",
+  "func": "__do_sys_exit_group"
+}
+{
+  "inline": true,
+  "file": "kernel/exit.c",
+  "line": "979",
+  "func": "__se_sys_exit_group"
+}
+{
+  "inline": false,
+  "file": "kernel/exit.c",
+  "line": "979",
+  "func": "__x64_sys_exit_group",
+  "offset": "0x3e/0x50"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "290",
+  "func": "do_syscall_64",
+  "offset": "0x1b9/0x820"
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c */
+
+/* @@ -812,6 +812,9 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory, */
+		memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
+		q->memory = memory;
+		q->waiting_for_buffers = !q->is_output;
+	}
+
+	num_buffers = min(*count, VB2_MAX_FRAME - q->num_buffers);
+
+</source_code>
+
+<trace_summary>
+
+</trace_summary>
+
+Return strict JSON:
+{
+  "crash_type": "...",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "suspicious_function_or_variable": "...",
+      "root_cause_hypothesis": "...",
+      "evidence": ["...", "..."],
+      "repair_idea": "...",
+      "uncertainty": "..."
+    }
+  ]
+}
+

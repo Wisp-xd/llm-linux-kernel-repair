@@ -1,0 +1,21 @@
+Trace summary extracted from crash report:
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "552",
+  "func": "kmalloc"
+}
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "682",
+  "func": "kzalloc"
+}
+{
+  "inline": false,
+  "file": "drivers/media/usb/dvb-usb/cinergyT2-fe.c",
+  "line": "271",
+  "func": "cinergyt2_fe_attach",
+  "offset": "0x21/0x80"
+}
+{

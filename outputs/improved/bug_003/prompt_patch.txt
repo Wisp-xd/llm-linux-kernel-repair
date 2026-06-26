@@ -1,0 +1,342 @@
+You are a Linux kernel patch generation assistant.
+
+Generate a replace-based edit patch based on the selected root-cause hypothesis. This task specifically tries to avoid amputation-style repairs, where a model removes, comments out, or bypasses core functionality only to make the crash disappear.
+
+Semantic guard constraints:
+1. Do not delete, comment out, or bypass core functional code to eliminate the crash.
+2. Do not add unjustified early returns. Early returns are allowed only when the source already has a clear error-handling path and the crash evidence supports it.
+3. For memory leaks, prefer completing resource release, reference-count rollback, or error-path cleanup.
+4. For out-of-bounds bugs, prefer adding necessary bounds checks while preserving normal processing branches.
+5. For null pointer dereferences, prefer adding necessary NULL checks while preserving the original behavior when the object exists.
+6. Each edit must explain why it preserves existing functionality.
+7. Each edit must mark amputation_risk as low, medium, or high.
+8. Keep changes limited to the localization file.
+
+<bug_id>
+bug_003
+</bug_id>
+
+<localization_file>
+kernel/printk/printk.c
+</localization_file>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "79",
+  "func": "__dump_stack",
+  "idf": 1.7294117647058824
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "120",
+  "func": "dump_stack",
+  "offset": "0x107/0x163",
+  "idf": 2.5565217391304347
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "230",
+  "func": "print_address_description.constprop.0.cold",
+  "offset": "0x5b/0x2c6",
+  "idf": 5.25
+}
+{
+  "inline": true,
+  "file": "mm/kasan/report.c",
+  "line": "396",
+  "func": "__kasan_report",
+  "idf": 8.909090909090908
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "413",
+  "func": "kasan_report.cold",
+  "offset": "0x79/0xd5",
+  "idf": 9.1875
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1401",
+  "func": "record_print_text",
+  "offset": "0x33f/0x380",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1459",
+  "func": "syslog_print",
+  "offset": "0x2bb/0x430",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1586",
+  "func": "do_syslog.part.0",
+  "offset": "0x2a8/0x7c0",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1567",
+  "func": "do_syslog",
+  "offset": "0x49/0x60",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/proc/kmsg.c",
+  "line": "40",
+  "func": "kmsg_read",
+  "offset": "0x90/0xb0",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "fs/proc/inode.c",
+  "line": "321",
+  "func": "pde_read",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/proc/inode.c",
+  "line": "331",
+  "func": "proc_reg_read",
+  "offset": "0x119/0x300",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "494",
+  "func": "vfs_read",
+  "offset": "0x1b5/0x570",
+  "idf": 58.8
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "634",
+  "func": "ksys_read",
+  "offset": "0x12d/0x250",
+  "idf": 73.5
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "46",
+  "func": "do_syscall_64",
+  "offset": "0x2d/0x70",
+  "idf": 1.1902834008097165
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "38",
+  "func": "kasan_save_stack",
+  "offset": "0x1b/0x40",
+  "idf": 7.7368421052631575
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "46",
+  "func": "kasan_set_track",
+  "idf": 7.7368421052631575
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "401",
+  "func": "set_alloc_info",
+  "idf": 13.363636363636363
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "429",
+  "func": "____kasan_kmalloc.constprop.0",
+  "offset": "0x7f/0xa0",
+  "idf": 147.0
+}
+{
+  "inline": true,
+  "file": "include/linux/kasan.h",
+  "line": "219",
+  "func": "kasan_kmalloc",
+  "idf": 9.483870967741934
+}
+{
+  "inline": false,
+  "file": "mm/slab.c",
+  "line": "3554",
+  "func": "kmem_cache_alloc_trace",
+  "offset": "0x1e0/0x400",
+  "idf": 16.333333333333332
+}
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "552",
+  "func": "kmalloc",
+  "idf": 6.533333333333333
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1430",
+  "func": "syslog_print",
+  "offset": "0xb2/0x430",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1586",
+  "func": "do_syslog.part.0",
+  "offset": "0x2a8/0x7c0",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1567",
+  "func": "do_syslog",
+  "offset": "0x49/0x60",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/proc/kmsg.c",
+  "line": "40",
+  "func": "kmsg_read",
+  "offset": "0x90/0xb0",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "fs/proc/inode.c",
+  "line": "321",
+  "func": "pde_read",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/proc/inode.c",
+  "line": "331",
+  "func": "proc_reg_read",
+  "offset": "0x119/0x300",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "494",
+  "func": "vfs_read",
+  "offset": "0x1b5/0x570",
+  "idf": 58.8
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "634",
+  "func": "ksys_read",
+  "offset": "0x12d/0x250",
+  "idf": 73.5
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "46",
+  "func": "do_syscall_64",
+  "offset": "0x2d/0x70",
+  "idf": 1.1902834008097165
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c */
+
+/* @@ -1399,7 +1399,7 @@ static size_t record_print_text(struct printk_record *r, bool syslog, */
+	 * not counted in the return value.
+	 */
+	if (buf_size > 0)
+		text[len] = 0;
+
+	return len;
+}
+
+</source_code>
+
+<trace_summary>
+Trace summary extracted from crash report:
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "79",
+  "func": "__dump_stack",
+  "idf": 1.7294117647058824
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "120",
+  "func": "dump_stack",
+  "offset": "0x107/0x163",
+  "idf": 2.5565217391304347
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "230",
+  "func": "print_address_description.constprop.0.cold",
+
+</trace_summary>
+
+<selected_hypothesis>
+{
+  "id": "H1",
+  "suspicious_function_or_variable": "record_print_text",
+  "root_cause_hypothesis": "In record_print_text, the null-termination write 'text[len] = 0' occurs when len equals buf_size, causing an off-by-one write past the allocated buffer. This corrupts heap metadata and triggers a KASAN report on subsequent allocation/free operations.",
+  "evidence": [
+    "Crash report shows KASAN report triggered from ____kasan_kmalloc -> kmem_cache_alloc_trace -> kmalloc, indicating heap corruption detected during allocation.",
+    "Source code excerpt shows 'if (buf_size > 0) text[len] = 0;' where len could equal buf_size if the loop fills the entire buffer without early termination.",
+    "Stack trace includes record_print_text at kernel/printk/printk.c:1401, which is the exact line of the null-termination write."
+  ],
+  "repair_idea": "Change the condition to 'if (len < buf_size) text[len] = 0;' to prevent writing beyond the buffer when it is exactly full.",
+  "uncertainty": "Low - the source code snippet directly shows the off-by-one vulnerability at the reported line."
+}
+</selected_hypothesis>
+
+Return strict JSON:
+{
+  "edits": [
+    {
+      "file": "kernel/printk/printk.c",
+      "original": "...",
+      "replaced": "...",
+      "reason": "...",
+      "semantic_preservation_reason": "...",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "...",
+  "why_not_amputation": "...",
+  "limitations": "..."
+}
+

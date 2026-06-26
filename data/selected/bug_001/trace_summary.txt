@@ -1,0 +1,21 @@
+Trace summary extracted from crash report:
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "600",
+  "func": "kmalloc"
+}
+{
+  "inline": false,
+  "file": "net/netfilter/nf_tables_api.c",
+  "line": "1901",
+  "func": "nft_netdev_hook_alloc",
+  "offset": "0x3b/0xc0"
+}
+{
+  "inline": true,
+  "file": "net/netfilter/nf_tables_api.c",
+  "line": "1998",
+  "func": "nft_chain_parse_netdev"
+}
+{

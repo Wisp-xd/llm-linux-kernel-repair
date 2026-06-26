@@ -1,0 +1,74 @@
+You are a Linux kernel crash analysis assistant.
+
+Analyze the following crash report, source code, and optional trace summary. Generate root-cause hypotheses before producing any patch.
+
+Requirements:
+1. Do not generate code patches in this step.
+2. Identify the crash type, such as memory leak, UBSAN out-of-bounds, null pointer dereference, warning, or other.
+3. Identify suspicious functions, variables, fields, or resources.
+4. Generate three ranked hypotheses.
+5. Every hypothesis must cite evidence from the crash report, stack trace, source code, or trace summary.
+6. If evidence is insufficient, explicitly state uncertainty.
+7. If a trace summary is provided, prioritize functions appearing in that trace.
+
+<bug_id>
+bug_demo_001
+</bug_id>
+
+<crash_report>
+BUG: kernel NULL pointer dereference in demo_send_packet
+RIP: demo_send_packet+0x21/0x90 drivers/demo/demo_driver.c:18
+Call Trace:
+ demo_ioctl
+ demo_send_packet
+The crash happens when ctx->dev is NULL and demo_send_packet dereferences ctx->dev->queue.
+
+
+</crash_report>
+
+<source_code>
+struct demo_dev {
+    int queue;
+};
+
+struct demo_ctx {
+    struct demo_dev *dev;
+};
+
+static int demo_send_packet(struct demo_ctx *ctx)
+{
+    int q = ctx->dev->queue;
+
+    if (q < 0)
+        return -1;
+
+    return q;
+}
+
+static int demo_ioctl(struct demo_ctx *ctx)
+{
+    return demo_send_packet(ctx);
+}
+
+
+</source_code>
+
+<trace_summary>
+
+</trace_summary>
+
+Return strict JSON:
+{
+  "crash_type": "...",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "suspicious_function_or_variable": "...",
+      "root_cause_hypothesis": "...",
+      "evidence": ["...", "..."],
+      "repair_idea": "...",
+      "uncertainty": "..."
+    }
+  ]
+}
+

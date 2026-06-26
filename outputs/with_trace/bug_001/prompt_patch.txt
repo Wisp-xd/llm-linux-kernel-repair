@@ -1,0 +1,200 @@
+You are a Linux kernel patch generation assistant.
+
+Generate a candidate patch based on the selected root-cause hypothesis.
+
+Important requirements:
+1. Output replace-based edits only. Do not output a full git diff.
+2. Each edit must contain file, original, replaced, and reason.
+3. original must be a continuous snippet that appears exactly in the source code.
+4. replaced must be the complete replacement snippet.
+5. Keep the modification small and directly related to the selected hypothesis.
+6. Do not invent functions, macros, fields, or files.
+7. If no reliable patch can be generated, return an empty edits list and explain why.
+
+<bug_id>
+bug_001
+</bug_id>
+
+<localization_file>
+net/netfilter/nf_tables_api.c
+</localization_file>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "600",
+  "func": "kmalloc"
+}
+{
+  "inline": false,
+  "file": "net/netfilter/nf_tables_api.c",
+  "line": "1901",
+  "func": "nft_netdev_hook_alloc",
+  "offset": "0x3b/0xc0"
+}
+{
+  "inline": true,
+  "file": "net/netfilter/nf_tables_api.c",
+  "line": "1998",
+  "func": "nft_chain_parse_netdev"
+}
+{
+  "inline": false,
+  "file": "net/netfilter/nf_tables_api.c",
+  "line": "2073",
+  "func": "nft_chain_parse_hook",
+  "offset": "0x33a/0x530"
+}
+{
+  "inline": false,
+  "file": "net/netfilter/nf_tables_api.c",
+  "line": "2218",
+  "func": "nf_tables_addchain.constprop.0",
+  "offset": "0x10b/0x950"
+}
+{
+  "inline": false,
+  "file": "net/netfilter/nf_tables_api.c",
+  "line": "2593",
+  "func": "nf_tables_newchain",
+  "offset": "0xa8b/0xc60"
+}
+{
+  "inline": false,
+  "file": "net/netfilter/nfnetlink.c",
+  "line": "517",
+  "func": "nfnetlink_rcv_batch",
+  "offset": "0xa46/0xd20"
+}
+{
+  "inline": true,
+  "file": "net/netfilter/nfnetlink.c",
+  "line": "638",
+  "func": "nfnetlink_rcv_skb_batch"
+}
+{
+  "inline": false,
+  "file": "net/netfilter/nfnetlink.c",
+  "line": "656",
+  "func": "nfnetlink_rcv",
+  "offset": "0x1f9/0x220"
+}
+{
+  "inline": true,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1319",
+  "func": "netlink_unicast_kernel"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1345",
+  "func": "netlink_unicast",
+  "offset": "0x397/0x4c0"
+}
+{
+  "inline": false,
+  "file": "net/netlink/af_netlink.c",
+  "line": "1921",
+  "func": "netlink_sendmsg",
+  "offset": "0x396/0x710"
+}
+{
+  "inline": true,
+  "file": "net/socket.c",
+  "line": "714",
+  "func": "sock_sendmsg_nosec"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "734",
+  "func": "sock_sendmsg",
+  "offset": "0x56/0x80"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2482",
+  "func": "____sys_sendmsg",
+  "offset": "0x36c/0x390"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2536",
+  "func": "___sys_sendmsg",
+  "offset": "0xa8/0x110"
+}
+{
+  "inline": false,
+  "file": "net/socket.c",
+  "line": "2565",
+  "func": "__sys_sendmsg",
+  "offset": "0x88/0x100"
+}
+{
+  "inline": true,
+  "file": "arch/x86/entry/common.c",
+  "line": "50",
+  "func": "do_syscall_x64"
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "80",
+  "func": "do_syscall_64",
+  "offset": "0x35/0xb0"
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c */
+
+/* @@ -2166,8 +2166,10 @@ static int nft_basechain_init(struct nft_base_chain *basechain, u8 family, */
+	chain->flags |= NFT_CHAIN_BASE | flags;
+	basechain->policy = NF_ACCEPT;
+	if (chain->flags & NFT_CHAIN_HW_OFFLOAD &&
+	    !nft_chain_offload_support(basechain))
+		return -EOPNOTSUPP;
+
+	flow_block_init(&basechain->flow_block);
+
+</source_code>
+
+<selected_hypothesis>
+{
+  "id": "H1",
+  "suspicious_function_or_variable": "nft_netdev_hook_alloc",
+  "root_cause_hypothesis": "kmalloc in nft_netdev_hook_alloc returns NULL due to insufficient memory, but the return value is not checked before dereferencing, leading to a null pointer dereference.",
+  "evidence": [
+    "Crash occurs at kmalloc in include/linux/slab.h:600, called from nft_netdev_hook_alloc at net/netfilter/nf_tables_api.c:1901.",
+    "The trace shows nft_netdev_hook_alloc offset 0x3b/0xc0, indicating the crash happens early in the function, likely right after the allocation.",
+    "No error handling is visible in the provided source excerpt, and the crash report does not show a check for NULL after kmalloc."
+  ],
+  "repair_idea": "Add a NULL check after kmalloc in nft_netdev_hook_alloc and return an appropriate error code (e.g., -ENOMEM) if allocation fails.",
+  "uncertainty": "Medium - the exact line of the crash is not shown, but the offset suggests it is shortly after the kmalloc call."
+}
+</selected_hypothesis>
+
+Return strict JSON:
+{
+  "edits": [
+    {
+      "file": "net/netfilter/nf_tables_api.c",
+      "original": "...",
+      "replaced": "...",
+      "reason": "..."
+    }
+  ],
+  "expected_effect": "...",
+  "limitations": "..."
+}
+

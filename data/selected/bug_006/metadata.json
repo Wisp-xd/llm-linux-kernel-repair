@@ -1,0 +1,18 @@
+{
+  "bug_id": "bug_006",
+  "kbench_bug_id": "d21cb12ee03822236d82ba4e83a1f8968e7832fb",
+  "bug_type": "null_pointer",
+  "title": "KASAN: null-ptr-deref Read in filemap_fault",
+  "display_title": "KASAN: null-ptr-deref Read in filemap_fault",
+  "status": "fixed",
+  "subsystem": "mm, udf",
+  "localization_file": "mm/filemap.c",
+  "fix_files_count": 1,
+  "patch_added_lines": 1,
+  "patch_removed_lines": 1,
+  "crash_report_path": "crash_report.txt",
+  "source_file_path": "source.c",
+  "developer_patch_path": "developer_patch.diff",
+  "trace_summary_path": "trace_summary.txt",
+  "source_note": "source.c is a patch-context excerpt, not the full Linux source file."
+}

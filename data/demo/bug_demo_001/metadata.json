@@ -1,0 +1,12 @@
+{
+  "bug_id": "bug_demo_001",
+  "bug_type": "null_pointer",
+  "subsystem": "demo",
+  "localization_file": "drivers/demo/demo_driver.c",
+  "crash_report_path": "crash_report.txt",
+  "source_file_path": "source.c",
+  "developer_patch_path": "developer_patch.diff",
+  "trace_summary_path": "trace_summary.txt",
+  "note": "This is a toy demo case for pipeline verification only. It is not a real kBenchSyz result."
+}
+

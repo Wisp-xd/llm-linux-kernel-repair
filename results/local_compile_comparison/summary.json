@@ -1,0 +1,38 @@
+[
+  {
+    "variant": "parent",
+    "commit": "197b6b60ae7bc51dd0814953c562833143b292aa",
+    "target": "fs/namespace.o",
+    "checkout_ok": true,
+    "patch_apply": "not_applicable",
+    "defconfig_ok": true,
+    "local_compile_ok": true,
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "object_sha256": "8abccf3ac28a18122e7f2431f08ee6f31cba1b5599633e70955d7d030bb40971",
+    "notes": "local compile passed"
+  },
+  {
+    "variant": "developer",
+    "commit": "197b6b60ae7bc51dd0814953c562833143b292aa",
+    "target": "fs/namespace.o",
+    "checkout_ok": true,
+    "patch_apply": "passed",
+    "defconfig_ok": true,
+    "local_compile_ok": true,
+    "source_diff_sha256": "aaada1c354dc08037e59c17567ccd8bb908ce5e4d845a5f0da06f07ddc75832b",
+    "object_sha256": "bad2f34483c009a1e25afb78a79e7002194738ea8355e140512c77205ba5edc8",
+    "notes": "local compile passed"
+  },
+  {
+    "variant": "llm_improved",
+    "commit": "197b6b60ae7bc51dd0814953c562833143b292aa",
+    "target": "fs/namespace.o",
+    "checkout_ok": true,
+    "patch_apply": "passed",
+    "defconfig_ok": true,
+    "local_compile_ok": true,
+    "source_diff_sha256": "aaada1c354dc08037e59c17567ccd8bb908ce5e4d845a5f0da06f07ddc75832b",
+    "object_sha256": "bad2f34483c009a1e25afb78a79e7002194738ea8355e140512c77205ba5edc8",
+    "notes": "local compile passed"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "edits": [
+    {
+      "file": "kernel/printk/printk.c",
+      "original": "\tif (buf_size > 0)\n\t\ttext[len] = 0;",
+      "replaced": "\tif (buf_size > 0 && len < buf_size)\n\t\ttext[len] = 0;",
+      "reason": "Prevent out-of-bounds write when len equals buf_size by checking len < buf_size before null-terminating."
+    }
+  ],
+  "expected_effect": "Eliminates the KASAN-detected buffer overflow in record_print_text by ensuring the null terminator is only written when there is room.",
+  "limitations": "Assumes that the caller correctly sets buf_size to the actual buffer capacity; does not address potential logic errors where len could exceed buf_size due to other bugs."
+}

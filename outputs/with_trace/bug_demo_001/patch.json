@@ -1,0 +1,12 @@
+{
+  "edits": [
+    {
+      "file": "drivers/demo/demo_driver.c",
+      "original": "static int demo_send_packet(struct demo_ctx *ctx)\n{\n    int q = ctx->dev->queue;",
+      "replaced": "static int demo_send_packet(struct demo_ctx *ctx)\n{\n    if (!ctx || !ctx->dev)\n        return -1;\n\n    int q = ctx->dev->queue;",
+      "reason": "Avoid a NULL pointer dereference before reading queue."
+    }
+  ],
+  "expected_effect": "Prevents the crash when ctx or ctx->dev is NULL.",
+  "limitations": "Mock output for pipeline verification only."
+}

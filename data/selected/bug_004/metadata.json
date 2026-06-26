@@ -1,0 +1,18 @@
+{
+  "bug_id": "bug_004",
+  "kbench_bug_id": "b72d20070b541e44e5b91326de68930e51654c81",
+  "bug_type": "out_of_bounds",
+  "title": "KASAN: slab-out-of-bounds Read in selinux_xfrm_alloc_user",
+  "display_title": "KASAN: slab-out-of-bounds Read in selinux_xfrm_alloc_user",
+  "status": "fixed",
+  "subsystem": "selinux",
+  "localization_file": "net/xfrm/xfrm_user.c",
+  "fix_files_count": 1,
+  "patch_added_lines": 3,
+  "patch_removed_lines": 0,
+  "crash_report_path": "crash_report.txt",
+  "source_file_path": "source.c",
+  "developer_patch_path": "developer_patch.diff",
+  "trace_summary_path": "trace_summary.txt",
+  "source_note": "source.c is a patch-context excerpt, not the full Linux source file."
+}

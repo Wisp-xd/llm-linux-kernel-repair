@@ -1,0 +1,15 @@
+{
+  "edits": [
+    {
+      "file": "net/xfrm/xfrm_user.c",
+      "original": "err = verify_newpolicy_info(&ua->policy);\n\tif (err)\n\t\tgoto free_state;",
+      "replaced": "err = verify_newpolicy_info(&ua->policy);\n\tif (err)\n\t\tgoto free_state;\n\n\t/* Validate security context length to prevent heap overflow in memcpy */\n\tif (ua->policy.security && ua->policy.security->ctx_len > sizeof(ua->policy.security->ctx)) {\n\t\terr = -EINVAL;\n\t\tgoto free_state;\n\t}",
+      "reason": "The crash trace indicates a heap buffer overflow in memcpy within selinux_xfrm_alloc_user, triggered by an oversized user-supplied security context. Adding a bounds check on ctx_len before the security context is processed prevents the overflow while preserving the normal policy construction path.",
+      "semantic_preservation_reason": "The check only rejects invalid inputs (ctx_len exceeding the fixed-size ctx buffer) and returns -EINVAL, which is a standard error for malformed netlink messages. Valid policies with correctly sized security contexts are unaffected, and all existing error-handling paths remain intact.",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "Prevents the heap buffer overflow by rejecting policies with an oversized security context length, eliminating the KASAN-reported memcpy out-of-bounds access.",
+  "why_not_amputation": "The fix adds a necessary bounds check rather than removing or bypassing the security context handling. The core functionality (copying and using the security context) is preserved for valid inputs.",
+  "limitations": "This fix assumes the security context buffer is fixed-size (ctx array). If the structure uses a flexible array or dynamic allocation, a different length validation may be needed. The exact structure definition should be verified in the full source."
+}

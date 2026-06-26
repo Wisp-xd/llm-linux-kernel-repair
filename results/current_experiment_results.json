@@ -1,0 +1,52 @@
+{
+  "updated_at": "2026-06-20",
+  "dataset": {
+    "bugs": 8,
+    "groups": 3,
+    "outputs": 24
+  },
+  "manual_evaluation": {
+    "plausible": 2,
+    "helpful": 7,
+    "incorrect": 15,
+    "useful": 9
+  },
+  "group_useful": {
+    "baseline": "2/8",
+    "with_trace": "3/8",
+    "improved": "4/8"
+  },
+  "source_applicability": {
+    "developer": "8/8",
+    "baseline": "3/8",
+    "with_trace": "2/8",
+    "improved": "5/8"
+  },
+  "semantic_guard_ablation": {
+    "control": "with_trace",
+    "treatment": "improved",
+    "useful_change_percentage_points": 12.5,
+    "patch_apply_change_percentage_points": 37.5,
+    "no_edit_change_percentage_points": -50.0,
+    "additional_checkpatch_warnings": 2
+  },
+  "memory_leak_subset": {
+    "outputs": 6,
+    "plausible": 0,
+    "helpful": 0,
+    "incorrect": 6,
+    "patch_apply_ok": 0
+  },
+  "bug_008_dynamic_validation": {
+    "parent_job": "00000009",
+    "parent_time_to_crash_seconds_approx": 59,
+    "parent_reproduce_rate": "100%",
+    "patched_jobs": ["00000016", "00000017", "00000018"],
+    "window_per_run": "6m",
+    "clean_passes": "3/3",
+    "target_crashes": 0,
+    "special_crashes": 0,
+    "image_ability_normal": "3/3"
+  },
+  "scope_limit": "Dynamic validation covers one bug and one VM configuration; results are not an overall real repair rate."
+}

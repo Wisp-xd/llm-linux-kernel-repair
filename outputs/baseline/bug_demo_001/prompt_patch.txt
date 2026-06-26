@@ -1,0 +1,87 @@
+You are a Linux kernel patch generation assistant.
+
+Generate a candidate patch based on the selected root-cause hypothesis.
+
+Important requirements:
+1. Output replace-based edits only. Do not output a full git diff.
+2. Each edit must contain file, original, replaced, and reason.
+3. original must be a continuous snippet that appears exactly in the source code.
+4. replaced must be the complete replacement snippet.
+5. Keep the modification small and directly related to the selected hypothesis.
+6. Do not invent functions, macros, fields, or files.
+7. If no reliable patch can be generated, return an empty edits list and explain why.
+
+<bug_id>
+bug_demo_001
+</bug_id>
+
+<localization_file>
+drivers/demo/demo_driver.c
+</localization_file>
+
+<crash_report>
+BUG: kernel NULL pointer dereference in demo_send_packet
+RIP: demo_send_packet+0x21/0x90 drivers/demo/demo_driver.c:18
+Call Trace:
+ demo_ioctl
+ demo_send_packet
+The crash happens when ctx->dev is NULL and demo_send_packet dereferences ctx->dev->queue.
+
+
+</crash_report>
+
+<source_code>
+struct demo_dev {
+    int queue;
+};
+
+struct demo_ctx {
+    struct demo_dev *dev;
+};
+
+static int demo_send_packet(struct demo_ctx *ctx)
+{
+    int q = ctx->dev->queue;
+
+    if (q < 0)
+        return -1;
+
+    return q;
+}
+
+static int demo_ioctl(struct demo_ctx *ctx)
+{
+    return demo_send_packet(ctx);
+}
+
+
+</source_code>
+
+<selected_hypothesis>
+{
+  "id": "H1",
+  "suspicious_function_or_variable": "demo_send_packet / ctx->dev",
+  "root_cause_hypothesis": "demo_send_packet dereferences ctx->dev before validating it.",
+  "evidence": [
+    "crash report mentions NULL pointer dereference",
+    "source reads ctx->dev->queue"
+  ],
+  "repair_idea": "Add a NULL check before dereferencing ctx->dev.",
+  "uncertainty": "Mock output; real experiment should call an LLM."
+}
+</selected_hypothesis>
+
+Return strict JSON:
+{
+  "edits": [
+    {
+      "file": "drivers/demo/demo_driver.c",
+      "original": "...",
+      "replaced": "...",
+      "reason": "..."
+    }
+  ],
+  "expected_effect": "...",
+  "limitations": "..."
+}
+

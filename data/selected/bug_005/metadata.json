@@ -1,0 +1,18 @@
+{
+  "bug_id": "bug_005",
+  "kbench_bug_id": "4ed0d6eea4561854b366170155a78652da4cef29",
+  "bug_type": "out_of_bounds",
+  "title": "UBSAN: shift-out-of-bounds in vhci_hub_control",
+  "display_title": "UBSAN: shift-out-of-bounds in vhci_hub_control",
+  "status": "fixed",
+  "subsystem": "usb",
+  "localization_file": "drivers/usb/usbip/vhci_hcd.c",
+  "fix_files_count": 1,
+  "patch_added_lines": 2,
+  "patch_removed_lines": 0,
+  "crash_report_path": "crash_report.txt",
+  "source_file_path": "source.c",
+  "developer_patch_path": "developer_patch.diff",
+  "trace_summary_path": "trace_summary.txt",
+  "source_note": "source.c is a patch-context excerpt, not the full Linux source file."
+}

@@ -1,0 +1,320 @@
+You are a Linux kernel patch generation assistant.
+
+Generate a candidate patch based on the selected root-cause hypothesis.
+
+Important requirements:
+1. Output replace-based edits only. Do not output a full git diff.
+2. Each edit must contain file, original, replaced, and reason.
+3. original must be a continuous snippet that appears exactly in the source code.
+4. replaced must be the complete replacement snippet.
+5. Keep the modification small and directly related to the selected hypothesis.
+6. Do not invent functions, macros, fields, or files.
+7. If no reliable patch can be generated, return an empty edits list and explain why.
+
+<bug_id>
+bug_006
+</bug_id>
+
+<localization_file>
+mm/filemap.c
+</localization_file>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "88",
+  "func": "__dump_stack",
+  "idf": 1.7294117647058824
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "106",
+  "func": "dump_stack_lvl",
+  "offset": "0x1e7/0x2d0",
+  "idf": 5.444444444444444
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "465",
+  "func": "print_report",
+  "offset": "0xe6/0x540",
+  "idf": 19.599999999999998
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "572",
+  "func": "kasan_report",
+  "offset": "0x176/0x1b0",
+  "idf": 5.444444444444444
+}
+{
+  "inline": false,
+  "file": "mm/kasan/generic.c",
+  "line": "187",
+  "func": "kasan_check_range",
+  "offset": "0x283/0x290",
+  "idf": 42.0
+}
+{
+  "inline": true,
+  "file": "include/linux/instrumented.h",
+  "line": "68",
+  "func": "instrument_atomic_read",
+  "idf": 98.00000000000001
+}
+{
+  "inline": true,
+  "file": "include/linux/atomic/atomic-instrumented.h",
+  "line": "27",
+  "func": "atomic_read",
+  "idf": 58.8
+}
+{
+  "inline": true,
+  "file": "include/linux/page_ref.h",
+  "line": "67",
+  "func": "page_ref_count",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "include/linux/mm.h",
+  "line": "996",
+  "func": "put_page_testzero",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "include/linux/mm.h",
+  "line": "1002",
+  "func": "folio_put_testzero",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "include/linux/mm.h",
+  "line": "1429",
+  "func": "folio_put",
+  "idf": 147.0
+}
+{
+  "inline": false,
+  "file": "mm/filemap.c",
+  "line": "3382",
+  "func": "filemap_fault",
+  "offset": "0x121e/0x1810",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "mm/memory.c",
+  "line": "4176",
+  "func": "__do_fault",
+  "offset": "0x136/0x500",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "mm/memory.c",
+  "line": "4530",
+  "func": "do_read_fault",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "mm/memory.c",
+  "line": "4659",
+  "func": "do_fault",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "mm/memory.c",
+  "line": "3647",
+  "func": "do_pte_missing",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "mm/memory.c",
+  "line": "4947",
+  "func": "handle_pte_fault",
+  "idf": 147.0
+}
+{
+  "inline": true,
+  "file": "mm/memory.c",
+  "line": "5089",
+  "func": "__handle_mm_fault",
+  "idf": 147.0
+}
+{
+  "inline": false,
+  "file": "mm/memory.c",
+  "line": "5243",
+  "func": "handle_mm_fault",
+  "offset": "0x41a8/0x5860",
+  "idf": 98.00000000000001
+}
+{
+  "inline": true,
+  "file": "arch/x86/mm/fault.c",
+  "line": "1440",
+  "func": "do_user_addr_fault",
+  "idf": 98.00000000000001
+}
+{
+  "inline": true,
+  "file": "arch/x86/mm/fault.c",
+  "line": "1534",
+  "func": "handle_page_fault",
+  "idf": 98.00000000000001
+}
+{
+  "inline": false,
+  "file": "arch/x86/mm/fault.c",
+  "line": "1590",
+  "func": "exc_page_fault",
+  "offset": "0x7d2/0x910",
+  "idf": 73.5
+}
+{
+  "inline": false,
+  "file": "arch/x86/include/asm/idtentry.h",
+  "line": "570",
+  "func": "asm_exc_page_fault",
+  "offset": "0x26/0x30",
+  "idf": 73.5
+}
+{
+  "inline": false,
+  "file": "lib/iov_iter.c",
+  "line": "362",
+  "func": "fault_in_iov_iter_readable",
+  "offset": "0xdf/0x280",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "mm/filemap.c",
+  "line": "3913",
+  "func": "generic_perform_write",
+  "offset": "0x20b/0x5e0",
+  "idf": 73.5
+}
+{
+  "inline": false,
+  "file": "mm/filemap.c",
+  "line": "4051",
+  "func": "__generic_file_write_iter",
+  "offset": "0x17a/0x400",
+  "idf": 73.5
+}
+{
+  "inline": false,
+  "file": "fs/udf/file.c",
+  "line": "115",
+  "func": "udf_file_write_iter",
+  "offset": "0x2fc/0x660",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "include/linux/fs.h",
+  "line": "1868",
+  "func": "call_write_iter",
+  "idf": 12.782608695652174
+}
+{
+  "inline": true,
+  "file": "fs/read_write.c",
+  "line": "491",
+  "func": "new_sync_write",
+  "idf": 19.599999999999998
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "584",
+  "func": "vfs_write",
+  "offset": "0x7ec/0xc10",
+  "idf": 16.333333333333332
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "637",
+  "func": "ksys_write",
+  "offset": "0x1a0/0x2c0",
+  "idf": 16.333333333333332
+}
+{
+  "inline": true,
+  "file": "arch/x86/entry/common.c",
+  "line": "50",
+  "func": "do_syscall_x64",
+  "idf": 3.0
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "80",
+  "func": "do_syscall_64",
+  "offset": "0x41/0xc0",
+  "idf": 1.1902834008097165
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/mm/filemap.c b/mm/filemap.c */
+
+/* @@ -3378,7 +3378,7 @@ vm_fault_t filemap_fault(struct vm_fault *vmf) */
+	 * re-find the vma and come back and find our hopefully still populated
+	 * page.
+	 */
+	if (folio)
+		folio_put(folio);
+	if (mapping_locked)
+		filemap_invalidate_unlock_shared(mapping);
+
+</source_code>
+
+<selected_hypothesis>
+{
+  "id": "H1",
+  "suspicious_function_or_variable": "folio_put (via filemap_fault)",
+  "root_cause_hypothesis": "A folio is being released (folio_put) while it is still in use or has already been freed, leading to a use-after-free or invalid memory access detected by KASAN.",
+  "evidence": [
+    "The crash report shows KASAN reporting an issue in kasan_check_range, triggered by instrument_atomic_read -> atomic_read -> page_ref_count -> put_page_testzero -> folio_put_testzero -> folio_put.",
+    "The stack trace includes filemap_fault at mm/filemap.c:3382, which calls folio_put.",
+    "The source code snippet shows that folio_put is called unconditionally if 'folio' is non-NULL, but there may be a race or logic error where the folio's reference count is already zero or the folio is corrupted."
+  ],
+  "repair_idea": "Ensure proper reference counting and synchronization around folio_put in filemap_fault. Check if the folio can be concurrently freed or if the reference count is already zero before calling folio_put.",
+  "uncertainty": "Medium - The exact nature of the KASAN report (e.g., use-after-free vs. out-of-bounds) is not fully specified, but the stack strongly implicates folio reference counting."
+}
+</selected_hypothesis>
+
+Return strict JSON:
+{
+  "edits": [
+    {
+      "file": "mm/filemap.c",
+      "original": "...",
+      "replaced": "...",
+      "reason": "..."
+    }
+  ],
+  "expected_effect": "...",
+  "limitations": "..."
+}
+

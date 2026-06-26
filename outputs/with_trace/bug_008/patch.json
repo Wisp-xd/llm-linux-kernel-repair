@@ -1,0 +1,5 @@
+{
+  "edits": [],
+  "expected_effect": "No reliable patch can be generated because the provided source excerpt is insufficient to determine the exact lifetime of 'mnt' and the correct reordering or guard needed to prevent the use-after-free. The hypothesis suggests a stale pointer, but without seeing the full error path and mount lifecycle management in do_mount_setattr, any edit would be speculative and could introduce new bugs.",
+  "limitations": "The source excerpt only shows a few lines around the cleanup_group_ids call. The actual allocation, freeing, and error handling of 'mnt' are not visible. A proper fix requires understanding when mnt is freed and whether the group ID is already released earlier in the function."
+}

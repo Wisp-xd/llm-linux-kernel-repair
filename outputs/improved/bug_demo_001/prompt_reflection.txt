@@ -1,0 +1,101 @@
+You are a Linux kernel patch reviewer.
+
+Several root-cause hypotheses were generated for the same kernel crash. Compare them against the crash report, stack trace, source code, and optional trace summary. Select the most credible hypothesis.
+
+Evaluation criteria:
+1. Is it consistent with the crash type?
+2. Does it explain the crash location in the stack trace?
+3. Does it explain the sanitizer report or warning?
+4. Does it refer to functions, variables, fields, or resources that exist in the code?
+5. Can it lead to a small, functionality-preserving patch?
+6. Does it contain hallucinated or contradictory information?
+
+<bug_id>
+bug_demo_001
+</bug_id>
+
+<crash_report>
+BUG: kernel NULL pointer dereference in demo_send_packet
+RIP: demo_send_packet+0x21/0x90 drivers/demo/demo_driver.c:18
+Call Trace:
+ demo_ioctl
+ demo_send_packet
+The crash happens when ctx->dev is NULL and demo_send_packet dereferences ctx->dev->queue.
+
+
+</crash_report>
+
+<source_code>
+struct demo_dev {
+    int queue;
+};
+
+struct demo_ctx {
+    struct demo_dev *dev;
+};
+
+static int demo_send_packet(struct demo_ctx *ctx)
+{
+    int q = ctx->dev->queue;
+
+    if (q < 0)
+        return -1;
+
+    return q;
+}
+
+static int demo_ioctl(struct demo_ctx *ctx)
+{
+    return demo_send_packet(ctx);
+}
+
+
+</source_code>
+
+<trace_summary>
+Call Stack from earliest to latest:
+1. demo_ioctl(ctx)
+2. demo_send_packet(ctx) [ACTIVE]
+
+Trace note:
+demo_send_packet dereferences ctx->dev before checking whether ctx or ctx->dev is NULL.
+
+
+</trace_summary>
+
+<hypotheses>
+{
+  "crash_type": "null pointer dereference",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "suspicious_function_or_variable": "demo_send_packet / ctx->dev",
+      "root_cause_hypothesis": "demo_send_packet dereferences ctx->dev before validating it.",
+      "evidence": [
+        "crash report mentions NULL pointer dereference",
+        "source reads ctx->dev->queue"
+      ],
+      "repair_idea": "Add a NULL check before dereferencing ctx->dev.",
+      "uncertainty": "Mock output; real experiment should call an LLM."
+    }
+  ]
+}
+</hypotheses>
+
+Return strict JSON:
+{
+  "analysis": [
+    {
+      "hypothesis_id": "H1",
+      "strengths": ["..."],
+      "weaknesses": ["..."],
+      "evidence_consistency": "high"
+    }
+  ],
+  "selected_hypothesis_id": "...",
+  "selection_reason": "...",
+  "consistent_with_crash_report": true,
+  "consistent_with_stack_trace": true,
+  "consistent_with_source_code": true
+}
+

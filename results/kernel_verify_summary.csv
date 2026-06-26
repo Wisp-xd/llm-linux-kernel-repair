@@ -1,0 +1,35 @@
+﻿bug_id,group,parent_commit,checkout_ok,developer_patch_check_ok,model_original_matched,model_apply_ok,diff_check_ok,checkpatch_errors,checkpatch_warnings,notes
+bug_001,developer,d047283a7034140ea5da759a494fd2274affdd46,True,True,,,,,,
+bug_001,baseline,d047283a7034140ea5da759a494fd2274affdd46,True,,False,False,False,,,original not matched for edit(s): 1
+bug_001,with_trace,d047283a7034140ea5da759a494fd2274affdd46,True,,False,False,False,,,original not matched for edit(s): 1
+bug_001,improved,d047283a7034140ea5da759a494fd2274affdd46,True,,False,False,False,,,original not matched for edit(s): 1
+bug_002,developer,321c0d383dc3aa1b00a1a1e0957f1543fc84a028,True,True,,,,,,
+bug_002,baseline,321c0d383dc3aa1b00a1a1e0957f1543fc84a028,True,,False,False,False,,,no edits
+bug_002,with_trace,321c0d383dc3aa1b00a1a1e0957f1543fc84a028,True,,False,False,False,,,no edits
+bug_002,improved,321c0d383dc3aa1b00a1a1e0957f1543fc84a028,True,,False,False,False,,,original not matched for edit(s): 1
+bug_003,developer,f0e386ee0c0b71ea6f7238506a4d0965a2dbef11,True,True,,,,,,
+bug_003,baseline,f0e386ee0c0b71ea6f7238506a4d0965a2dbef11,True,,True,True,True,0,0,
+bug_003,with_trace,f0e386ee0c0b71ea6f7238506a4d0965a2dbef11,True,,True,True,True,0,0,
+bug_003,improved,f0e386ee0c0b71ea6f7238506a4d0965a2dbef11,True,,True,True,True,0,0,
+bug_004,developer,171d449a028573b2f0acdc7f31ecbb045391b320,True,True,,,,,,
+bug_004,baseline,171d449a028573b2f0acdc7f31ecbb045391b320,True,,False,False,False,,,no edits
+bug_004,with_trace,171d449a028573b2f0acdc7f31ecbb045391b320,True,,False,False,False,,,original not matched for edit(s): 1
+bug_004,improved,171d449a028573b2f0acdc7f31ecbb045391b320,True,,True,True,True,0,2,"/home/wisp/linux-kernel-verify/linux/.codex_model_patch.diff:9: WARNING: line over 80 characters
+/home/wisp/linux-kernel-verify/linux/.codex_model_patch.diff:10: WARNING: line over 80 characters
+total: 0 errors, 2 warnings, 0 checks, 12 lines checked"
+bug_005,developer,020a1f453449294926ca548d8d5ca970926e8dfd,True,True,,,,,,
+bug_005,baseline,020a1f453449294926ca548d8d5ca970926e8dfd,True,,True,True,True,0,0,
+bug_005,with_trace,020a1f453449294926ca548d8d5ca970926e8dfd,True,,True,True,True,0,0,
+bug_005,improved,020a1f453449294926ca548d8d5ca970926e8dfd,True,,True,True,True,0,0,
+bug_006,developer,dd9e11d6477a52ede9ebe575c83285e79e823889,True,True,,,,,,
+bug_006,baseline,dd9e11d6477a52ede9ebe575c83285e79e823889,True,,False,False,False,,,no edits
+bug_006,with_trace,dd9e11d6477a52ede9ebe575c83285e79e823889,True,,False,False,False,,,no edits
+bug_006,improved,dd9e11d6477a52ede9ebe575c83285e79e823889,True,,True,True,True,0,0,
+bug_007,developer,2912289a518077ddb8214e05336700148e97e235,True,True,,,,,,
+bug_007,baseline,2912289a518077ddb8214e05336700148e97e235,True,,False,False,False,,,no edits
+bug_007,with_trace,2912289a518077ddb8214e05336700148e97e235,True,,False,False,False,,,no edits
+bug_007,improved,2912289a518077ddb8214e05336700148e97e235,True,,False,False,False,,,original not matched for edit(s): 1
+bug_008,developer,197b6b60ae7bc51dd0814953c562833143b292aa,True,True,,,,,,
+bug_008,baseline,197b6b60ae7bc51dd0814953c562833143b292aa,True,,True,True,True,0,0,
+bug_008,with_trace,197b6b60ae7bc51dd0814953c562833143b292aa,True,,False,False,False,,,no edits
+bug_008,improved,197b6b60ae7bc51dd0814953c562833143b292aa,True,,True,True,True,0,0,

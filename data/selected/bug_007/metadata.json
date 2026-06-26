@@ -1,0 +1,18 @@
+{
+  "bug_id": "bug_007",
+  "kbench_bug_id": "17535f4bf5b322437f7c639b59161ce343fc55a9",
+  "bug_type": "null_pointer",
+  "title": "KASAN: null-ptr-deref Read in __vb2_buf_mem_free",
+  "display_title": "KASAN: null-ptr-deref Read in refcount_sub_and_test_checked (2)",
+  "status": "fixed",
+  "subsystem": "media",
+  "localization_file": "drivers/media/common/videobuf2/videobuf2-core.c",
+  "fix_files_count": 1,
+  "patch_added_lines": 3,
+  "patch_removed_lines": 0,
+  "crash_report_path": "crash_report.txt",
+  "source_file_path": "source.c",
+  "developer_patch_path": "developer_patch.diff",
+  "trace_summary_path": "trace_summary.txt",
+  "source_note": "source.c is a patch-context excerpt, not the full Linux source file."
+}

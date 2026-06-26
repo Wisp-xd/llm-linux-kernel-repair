@@ -1,0 +1,12 @@
+{
+  "edits": [
+    {
+      "file": "kernel/printk/printk.c",
+      "original": "if (buf_size > 0)\n\t\ttext[len] = 0;",
+      "replaced": "if (buf_size > 0 && len < buf_size)\n\t\ttext[len] = 0;",
+      "reason": "Prevent null terminator write beyond the allocated buffer when the log text exactly fills the buffer. The condition ensures we only write the null terminator if there is space within the buffer, avoiding a heap buffer overflow."
+    }
+  ],
+  "expected_effect": "The null terminator will not be written past the end of the buffer, preventing the KASAN-detected heap buffer overflow when reading /proc/kmsg.",
+  "limitations": "This fix only addresses the symptom in record_print_text. The root cause may also require adjusting the allocation size in syslog_print to be len+1, but the provided source excerpt does not include syslog_print's allocation logic, so a complete fix cannot be generated."
+}

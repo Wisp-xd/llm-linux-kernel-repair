@@ -1,0 +1,7 @@
+Call Stack from earliest to latest:
+1. demo_ioctl(ctx)
+2. demo_send_packet(ctx) [ACTIVE]
+
+Trace note:
+demo_send_packet dereferences ctx->dev before checking whether ctx or ctx->dev is NULL.
+

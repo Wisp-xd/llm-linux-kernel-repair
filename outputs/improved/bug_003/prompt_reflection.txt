@@ -1,0 +1,365 @@
+You are a Linux kernel patch reviewer.
+
+Several root-cause hypotheses were generated for the same kernel crash. Compare them against the crash report, stack trace, source code, and optional trace summary. Select the most credible hypothesis.
+
+Evaluation criteria:
+1. Is it consistent with the crash type?
+2. Does it explain the crash location in the stack trace?
+3. Does it explain the sanitizer report or warning?
+4. Does it refer to functions, variables, fields, or resources that exist in the code?
+5. Can it lead to a small, functionality-preserving patch?
+6. Does it contain hallucinated or contradictory information?
+
+<bug_id>
+bug_003
+</bug_id>
+
+<crash_report>
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "79",
+  "func": "__dump_stack",
+  "idf": 1.7294117647058824
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "120",
+  "func": "dump_stack",
+  "offset": "0x107/0x163",
+  "idf": 2.5565217391304347
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "230",
+  "func": "print_address_description.constprop.0.cold",
+  "offset": "0x5b/0x2c6",
+  "idf": 5.25
+}
+{
+  "inline": true,
+  "file": "mm/kasan/report.c",
+  "line": "396",
+  "func": "__kasan_report",
+  "idf": 8.909090909090908
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "413",
+  "func": "kasan_report.cold",
+  "offset": "0x79/0xd5",
+  "idf": 9.1875
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1401",
+  "func": "record_print_text",
+  "offset": "0x33f/0x380",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1459",
+  "func": "syslog_print",
+  "offset": "0x2bb/0x430",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1586",
+  "func": "do_syslog.part.0",
+  "offset": "0x2a8/0x7c0",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1567",
+  "func": "do_syslog",
+  "offset": "0x49/0x60",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/proc/kmsg.c",
+  "line": "40",
+  "func": "kmsg_read",
+  "offset": "0x90/0xb0",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "fs/proc/inode.c",
+  "line": "321",
+  "func": "pde_read",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/proc/inode.c",
+  "line": "331",
+  "func": "proc_reg_read",
+  "offset": "0x119/0x300",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "494",
+  "func": "vfs_read",
+  "offset": "0x1b5/0x570",
+  "idf": 58.8
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "634",
+  "func": "ksys_read",
+  "offset": "0x12d/0x250",
+  "idf": 73.5
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "46",
+  "func": "do_syscall_64",
+  "offset": "0x2d/0x70",
+  "idf": 1.1902834008097165
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "38",
+  "func": "kasan_save_stack",
+  "offset": "0x1b/0x40",
+  "idf": 7.7368421052631575
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "46",
+  "func": "kasan_set_track",
+  "idf": 7.7368421052631575
+}
+{
+  "inline": true,
+  "file": "mm/kasan/common.c",
+  "line": "401",
+  "func": "set_alloc_info",
+  "idf": 13.363636363636363
+}
+{
+  "inline": false,
+  "file": "mm/kasan/common.c",
+  "line": "429",
+  "func": "____kasan_kmalloc.constprop.0",
+  "offset": "0x7f/0xa0",
+  "idf": 147.0
+}
+{
+  "inline": true,
+  "file": "include/linux/kasan.h",
+  "line": "219",
+  "func": "kasan_kmalloc",
+  "idf": 9.483870967741934
+}
+{
+  "inline": false,
+  "file": "mm/slab.c",
+  "line": "3554",
+  "func": "kmem_cache_alloc_trace",
+  "offset": "0x1e0/0x400",
+  "idf": 16.333333333333332
+}
+{
+  "inline": true,
+  "file": "include/linux/slab.h",
+  "line": "552",
+  "func": "kmalloc",
+  "idf": 6.533333333333333
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1430",
+  "func": "syslog_print",
+  "offset": "0xb2/0x430",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1586",
+  "func": "do_syslog.part.0",
+  "offset": "0x2a8/0x7c0",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "kernel/printk/printk.c",
+  "line": "1567",
+  "func": "do_syslog",
+  "offset": "0x49/0x60",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/proc/kmsg.c",
+  "line": "40",
+  "func": "kmsg_read",
+  "offset": "0x90/0xb0",
+  "idf": 294.0
+}
+{
+  "inline": true,
+  "file": "fs/proc/inode.c",
+  "line": "321",
+  "func": "pde_read",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/proc/inode.c",
+  "line": "331",
+  "func": "proc_reg_read",
+  "offset": "0x119/0x300",
+  "idf": 294.0
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "494",
+  "func": "vfs_read",
+  "offset": "0x1b5/0x570",
+  "idf": 58.8
+}
+{
+  "inline": false,
+  "file": "fs/read_write.c",
+  "line": "634",
+  "func": "ksys_read",
+  "offset": "0x12d/0x250",
+  "idf": 73.5
+}
+{
+  "inline": false,
+  "file": "arch/x86/entry/common.c",
+  "line": "46",
+  "func": "do_syscall_64",
+  "offset": "0x2d/0x70",
+  "idf": 1.1902834008097165
+}
+</crash_report>
+
+<source_code>
+/*
+ * Source excerpt reconstructed from developer patch context.
+ * Replace with the full localization file when a Linux checkout is available.
+ */
+
+
+/* diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c */
+
+/* @@ -1399,7 +1399,7 @@ static size_t record_print_text(struct printk_record *r, bool syslog, */
+	 * not counted in the return value.
+	 */
+	if (buf_size > 0)
+		text[len] = 0;
+
+	return len;
+}
+
+</source_code>
+
+<trace_summary>
+Trace summary extracted from crash report:
+{
+  "inline": true,
+  "file": "lib/dump_stack.c",
+  "line": "79",
+  "func": "__dump_stack",
+  "idf": 1.7294117647058824
+}
+{
+  "inline": false,
+  "file": "lib/dump_stack.c",
+  "line": "120",
+  "func": "dump_stack",
+  "offset": "0x107/0x163",
+  "idf": 2.5565217391304347
+}
+{
+  "inline": false,
+  "file": "mm/kasan/report.c",
+  "line": "230",
+  "func": "print_address_description.constprop.0.cold",
+
+</trace_summary>
+
+<hypotheses>
+{
+  "crash_type": "KASAN out-of-bounds access (heap buffer overflow)",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "suspicious_function_or_variable": "record_print_text",
+      "root_cause_hypothesis": "In record_print_text, the null-termination write 'text[len] = 0' occurs when len equals buf_size, causing an off-by-one write past the allocated buffer. This corrupts heap metadata and triggers a KASAN report on subsequent allocation/free operations.",
+      "evidence": [
+        "Crash report shows KASAN report triggered from ____kasan_kmalloc -> kmem_cache_alloc_trace -> kmalloc, indicating heap corruption detected during allocation.",
+        "Source code excerpt shows 'if (buf_size > 0) text[len] = 0;' where len could equal buf_size if the loop fills the entire buffer without early termination.",
+        "Stack trace includes record_print_text at kernel/printk/printk.c:1401, which is the exact line of the null-termination write."
+      ],
+      "repair_idea": "Change the condition to 'if (len < buf_size) text[len] = 0;' to prevent writing beyond the buffer when it is exactly full.",
+      "uncertainty": "Low - the source code snippet directly shows the off-by-one vulnerability at the reported line."
+    },
+    {
+      "id": "H2",
+      "suspicious_function_or_variable": "syslog_print",
+      "root_cause_hypothesis": "syslog_print allocates a buffer via kmalloc with insufficient size, and record_print_text writes beyond it due to incorrect length calculation in syslog_print before calling record_print_text.",
+      "evidence": [
+        "Crash report shows kmalloc call from syslog_print at kernel/printk/printk.c:1430, which is the allocation site.",
+        "KASAN report triggers during ____kasan_kmalloc, suggesting the corrupted memory is detected when a new allocation is made, possibly for the same buffer.",
+        "Stack trace shows syslog_print -> record_print_text path, indicating the buffer is used immediately after allocation."
+      ],
+      "repair_idea": "Ensure syslog_print allocates buf_size + 1 bytes to accommodate the null terminator, or adjust the size passed to record_print_text.",
+      "uncertainty": "Medium - the exact size calculation in syslog_print is not shown, but the allocation site is clearly in the trace."
+    },
+    {
+      "id": "H3",
+      "suspicious_function_or_variable": "kmsg_read",
+      "root_cause_hypothesis": "kmsg_read passes an incorrect buffer size to do_syslog, which propagates to syslog_print and record_print_text, causing the off-by-one write.",
+      "evidence": [
+        "Crash report shows kmsg_read at fs/proc/kmsg.c:40 calling do_syslog, which eventually calls record_print_text.",
+        "The full call chain is kmsg_read -> do_syslog -> syslog_print -> record_print_text, indicating the buffer size originates from the read request.",
+        "KASAN report is triggered during a subsequent allocation, consistent with heap corruption from a previous write."
+      ],
+      "repair_idea": "Review the buffer size calculation in kmsg_read to ensure it accounts for the null terminator, or pass a size that leaves room for the terminator.",
+      "uncertainty": "High - the source code for kmsg_read is not provided, so the exact size calculation cannot be confirmed."
+    }
+  ]
+}
+</hypotheses>
+
+Return strict JSON:
+{
+  "analysis": [
+    {
+      "hypothesis_id": "H1",
+      "strengths": ["..."],
+      "weaknesses": ["..."],
+      "evidence_consistency": "high"
+    }
+  ],
+  "selected_hypothesis_id": "...",
+  "selection_reason": "...",
+  "consistent_with_crash_report": true,
+  "consistent_with_stack_trace": true,
+  "consistent_with_source_code": true
+}
+

@@ -1,0 +1,15 @@
+{
+  "edits": [
+    {
+      "file": "mm/filemap.c",
+      "original": "if (folio)\n\t\tfolio_put(folio);\n\tif (mapping_locked)\n\t\tfilemap_invalidate_unlock_shared(mapping);",
+      "replaced": "if (folio) {\n\t\tfolio_put(folio);\n\t\tfolio = NULL;\n\t}\n\tif (mapping_locked)\n\t\tfilemap_invalidate_unlock_shared(mapping);",
+      "reason": "After releasing the folio reference with folio_put(), set the local pointer to NULL to prevent any accidental subsequent use of the stale folio pointer within the same function scope. This directly addresses the use-after-free pattern where the folio memory could be accessed after its reference count drops to zero.",
+      "semantic_preservation_reason": "The change does not alter any control flow or functional logic. It only nullifies a local variable after the object it pointed to is no longer valid. All existing error-handling and normal paths remain intact, and the folio is still properly released. The NULL assignment is a defensive measure that preserves the original behavior when the folio is valid and prevents undefined behavior when it is not.",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "The KASAN use-after-free report should be eliminated because the stale folio pointer is explicitly set to NULL after folio_put(), preventing any subsequent dereference of freed memory. The fault handling logic remains unchanged.",
+  "why_not_amputation": "The repair does not remove, comment out, or bypass any core functionality. It adds a defensive pointer nullification that preserves the original release semantics while preventing invalid memory access.",
+  "limitations": "This fix only addresses the immediate use-after-free symptom in filemap_fault. If there are other code paths that retain and dereference the folio pointer after this point (e.g., through saved references in other structures), those would require separate investigation. The nullification is a local safeguard and does not fix potential races if the folio is concurrently accessed from other contexts."
+}

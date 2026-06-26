@@ -1,0 +1,16 @@
+{
+  "crash_type": "null pointer dereference",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "suspicious_function_or_variable": "demo_send_packet / ctx->dev",
+      "root_cause_hypothesis": "demo_send_packet dereferences ctx->dev before validating it.",
+      "evidence": [
+        "crash report mentions NULL pointer dereference",
+        "source reads ctx->dev->queue"
+      ],
+      "repair_idea": "Add a NULL check before dereferencing ctx->dev.",
+      "uncertainty": "Mock output; real experiment should call an LLM."
+    }
+  ]
+}

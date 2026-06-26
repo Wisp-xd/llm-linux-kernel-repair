@@ -1,0 +1,20 @@
+{
+  "patch_json_valid": true,
+  "edit_count": 1,
+  "all_original_matched": true,
+  "modified_only_localization_file": true,
+  "empty_or_too_short_replacement": false,
+  "large_deletion_detected": false,
+  "early_return_detected": true,
+  "comment_out_detected": false,
+  "reason_provided": true,
+  "semantic_reason_provided": true,
+  "amputation_suspected": false,
+  "risk_level": "medium",
+  "warnings": [
+    "edit 1: early return or goto requires manual review"
+  ],
+  "bug_id": "bug_demo_001",
+  "bug_type": "null_pointer",
+  "group": "baseline"
+}

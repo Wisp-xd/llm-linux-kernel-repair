@@ -1,0 +1,12 @@
+diff --git a/drivers/demo/demo_driver.c b/drivers/demo/demo_driver.c
+@@
+ static int demo_send_packet(struct demo_ctx *ctx)
+ {
++    if (!ctx || !ctx->dev)
++        return -1;
++
+     int q = ctx->dev->queue;
+ 
+     if (q < 0)
+         return -1;
+

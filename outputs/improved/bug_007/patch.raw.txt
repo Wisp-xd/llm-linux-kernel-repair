@@ -1,0 +1,15 @@
+{
+  "edits": [
+    {
+      "file": "drivers/media/common/videobuf2/videobuf2-core.c",
+      "original": "static void __vb2_buf_mem_free(struct vb2_buffer *vb)\n{\n\tunsigned int plane;\n\n\tif (vb->planes) {\n\t\tfor (plane = 0; plane < vb->num_planes; plane++) {\n\t\t\tif (vb->planes[plane].mem_priv)\n\t\t\t\tcall_void_memop(vb, plane, put,\n\t\t\t\t\t\tvb->planes[plane].mem_priv);\n\t\t}\n\t}\n}",
+      "replaced": "static void __vb2_buf_mem_free(struct vb2_buffer *vb)\n{\n\tunsigned int plane;\n\n\tif (vb->planes) {\n\t\tfor (plane = 0; plane < vb->num_planes; plane++) {\n\t\t\tif (vb->planes[plane].mem_priv) {\n\t\t\t\tcall_void_memop(vb, plane, put,\n\t\t\t\t\t\tvb->planes[plane].mem_priv);\n\t\t\t\tvb->planes[plane].mem_priv = NULL;\n\t\t\t}\n\t\t}\n\t}\n}",
+      "reason": "After calling the 'put' memory operation to release the buffer's private data, set mem_priv to NULL to prevent any subsequent double-free or use-after-free access. The crash trace shows a KASAN invalid read in refcount_dec_and_test_checked called from vb2_vmalloc_put, which is invoked via __vb2_buf_mem_free. If __vb2_buf_mem_free is called multiple times on the same buffer (e.g., during error cleanup paths), the second call would attempt to decrement a refcount on already-freed memory. Setting mem_priv to NULL after the first free ensures idempotency of the free operation.",
+      "semantic_preservation_reason": "This change preserves the original behavior when the buffer is freed exactly once: the 'put' operation is still called, and the memory is released. The only difference is that mem_priv is cleared afterward, which prevents erroneous double-free scenarios without altering the normal single-free path. The NULL check at the beginning of the loop already guards against calling 'put' on a NULL pointer, so this change simply ensures that a subsequent call to __vb2_buf_mem_free on the same vb will skip the already-freed planes.",
+      "amputation_risk": "low"
+    }
+  ],
+  "expected_effect": "Prevents the KASAN-detected invalid read by ensuring that each buffer plane's private memory is freed at most once. If __vb2_buf_mem_free is called again on the same buffer (e.g., during queue release after an error), the NULL mem_priv will cause the loop to skip the already-released planes, avoiding a use-after-free or double-free on the refcount field.",
+  "why_not_amputation": "The fix does not remove or bypass the memory freeing logic; it adds a defensive NULL assignment to make the existing NULL guard effective against repeated calls. The core functionality of releasing buffer memory is fully preserved.",
+  "limitations": "This fix addresses the symptom of double-free/use-after-free in the buffer cleanup path, but does not fix the root cause if the buffer is being freed while still in use by another thread. Additional synchronization may be needed if concurrent access is possible. The hypothesis uncertainty is medium, so this patch may not cover all scenarios if the invalid read originates from a different race condition."
+}

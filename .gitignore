@@ -1,0 +1,39 @@
+.env
+.env.*
+!.env.example
+
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local heavyweight workspaces and generated build artifacts
+linux*/
+kgym*/
+kernel-worktree/
+wsl/
+*.log
+*.tmp
+*.bak
+*~
+
+# Presentation decks are kept as local submission artifacts for now.
+presentation/
+*.pptx
+
+# Final Word/PDF reports are kept as local submission artifacts for now.
+*.docx
+*.pdf
+
+# Keep curated course artifacts in docs/, results/, outputs/, and data/selected/.
+# Do not commit private API keys or local kernel build trees.

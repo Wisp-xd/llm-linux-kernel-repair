@@ -1,0 +1,48 @@
+{
+  "bug": "bug_008",
+  "kernel_commit": "197b6b60ae7bc51dd0814953c562833143b292aa",
+  "target_crash": "KASAN: null-ptr-deref Read in sys_mount_setattr",
+  "syzkaller_checkout": "fbf0499acc828df26995835e51d83c3a0117e716",
+  "validation_window": "initial 5m; repeated 3 x 6m",
+  "parent": {
+    "job_id": "00000009",
+    "status": "finished",
+    "compilation_seconds": 4318.06762576103,
+    "target_crash_reproduced": true,
+    "observed_crash": "KASAN: null-ptr-deref Read in sys_mount_setattr",
+    "time_to_crash_seconds_approx": 59,
+    "reproduce_rate": "100%",
+    "image_ability": "normal"
+  },
+  "llm_improved": {
+    "job_id": "0000000a",
+    "status": "finished",
+    "compilation_seconds": 4123.2477831840515,
+    "used_parent_kcache": true,
+    "target_crash_reproduced": false,
+    "observed_special_result": "no output from test machine",
+    "image_ability": "warning",
+    "interpretation": "The target crash was absent for the full test window. The special result is a syzkaller silence watchdog triggered by the infinite non-crashing C reproducer, so this is positive but qualified evidence of repair."
+  },
+  "llm_improved_repeated": {
+    "job_ids": ["00000016", "00000017", "00000018"],
+    "runs": 3,
+    "window_per_run": "6m",
+    "clean_passes": 3,
+    "target_crashes": 0,
+    "special_crashes": 0,
+    "worker_exceptions": 0,
+    "image_ability": "normal",
+    "heartbeat_fix": "Independent child emits the syzkaller-recognized 'executing program' marker every 10 seconds."
+  },
+  "developer": {
+    "executed": false,
+    "reason": "Patch content is identical to llm_improved after LF normalization."
+  },
+  "conclusion": "The parent kernel reproduces the target crash and the improved patched kernel completes three independent six-minute clean runs without target or special crashes.",
+  "limitations": [
+    "Only one bug and one VM configuration were dynamically tested.",
+    "Absence of the target crash in three finite windows is evidence, not a proof of correctness.",
+    "The repeated clean runs total 18 configured minutes and do not establish long-term stability."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "edits": [
+    {
+      "file": "drivers/usb/usbip/vhci_hcd.c",
+      "original": "vhci_hcd->port_status[rhport] &= ~(1 << wValue);",
+      "replaced": "vhci_hcd->port_status[rhport] &= ~(1U << wValue);",
+      "reason": "Change 1 to 1U to perform an unsigned shift, avoiding undefined behavior when wValue is 31 or greater."
+    }
+  ],
+  "expected_effect": "Eliminates the UBSAN shift-out-of-bounds warning by ensuring the shift is performed on an unsigned integer, which has well-defined behavior for shift amounts up to 31.",
+  "limitations": "If wValue exceeds 31, the resulting mask will be 0 (since 1U << 32 is 0 on 32-bit unsigned), which may silently clear no bits. A more robust fix would add a bounds check, but this minimal change directly addresses the reported undefined behavior."
+}
